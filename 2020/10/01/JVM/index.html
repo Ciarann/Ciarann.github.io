@@ -177,7 +177,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      589 字
+      879 字
     </span>
   
 
@@ -187,7 +187,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      6
+      9
        分钟
     </span>
   
@@ -287,7 +287,34 @@
 <p>如果如果<strong>局部变量引用了对象</strong>，并<strong>逃离了方法的作用范围</strong>，则需要考虑线程安全问题</p>
 </li>
 </ol>
-<h4 id="栈内存溢出"><a href="#栈内存溢出" class="headerlink" title="栈内存溢出"></a>栈内存溢出</h4>
+<h4 id="栈内存溢出"><a href="#栈内存溢出" class="headerlink" title="栈内存溢出"></a>栈内存溢出</h4><p><strong>Java.lang.stackOverflowError</strong> 栈内存溢出</p>
+<h4 id="发生原因"><a href="#发生原因" class="headerlink" title="发生原因"></a>发生原因</h4><ul>
+<li>栈帧<strong>过多</strong>导致栈内存溢出(例如递归)</li>
+<li>栈帧<strong>过大</strong></li>
+</ul>
+<h4 id="线程运行诊断"><a href="#线程运行诊断" class="headerlink" title="线程运行诊断"></a>线程运行诊断</h4><p>CPU占用过高</p>
+<ul>
+<li>Linux环境下运行某些程序的时候，可能导致CPU的占用过高，这时需要定位占用CPU过高的线程<ul>
+<li><strong>top</strong>命令，查看是哪个<strong>进程</strong>占用CPU过高</li>
+<li><strong>ps H -eo pid, tid（线程id）, %cpu | grep 刚才通过top查到的进程号</strong> 通过ps命令进一步查看是哪个线程占用CPU过高</li>
+<li><strong>jstack 进程id</strong> 通过查看进程中的线程的nid，刚才通过ps命令看到的tid来<strong>对比定位</strong>，注意jstack查找出的线程id是<strong>16进制的</strong>，<strong>需要转换</strong></li>
+</ul>
+</li>
+</ul>
+<h3 id="3、本地方法栈"><a href="#3、本地方法栈" class="headerlink" title="3、本地方法栈"></a>3、本地方法栈</h3><p>一些带有<strong>native关键字</strong>的方法就是需要JAVA去调用本地的C或者C++方法，因为JAVA有时候没法直接和操作系统底层交互，所以需要用到本地方法</p>
+<h3 id="4、堆"><a href="#4、堆" class="headerlink" title="4、堆"></a>4、堆</h3><h4 id="定义-2"><a href="#定义-2" class="headerlink" title="定义"></a>定义</h4><p>通过new关键字<strong>创建的对象</strong>都会被放在堆内存</p>
+<h4 id="堆内存溢出"><a href="#堆内存溢出" class="headerlink" title="堆内存溢出"></a>堆内存溢出</h4><p><strong>java.lang.OutofMemoryError</strong> ：java heap space. 堆内存溢出</p>
+<h4 id="堆内存诊断"><a href="#堆内存诊断" class="headerlink" title="堆内存诊断"></a>堆内存诊断</h4><ul>
+<li><p><strong>jps</strong></p>
+</li>
+<li><p><strong>jmap</strong></p>
+</li>
+<li><p><strong>jconsole</strong></p>
+</li>
+<li><p><strong>jvirsalvm</strong></p>
+</li>
+</ul>
+
             </div>
             <hr>
             <div>
