@@ -177,7 +177,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      82 字
+      589 字
     </span>
   
 
@@ -187,7 +187,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      1
+      6
        分钟
     </span>
   
@@ -229,19 +229,65 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：October 1, 2020 pm
+                  本文最后更新于：October 3, 2020 pm
                 
               </p>
             
             <div class="markdown-body" id="post-body">
               <h1 id="JVM学习"><a href="#JVM学习" class="headerlink" title="JVM学习"></a>JVM学习</h1><p>本篇文章根据<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1yE411Z7AP">解密JVM</a>教学视频学习时，所做的笔记。</p>
 <h3 id="一、什么是JVM"><a href="#一、什么是JVM" class="headerlink" title="一、什么是JVM"></a>一、什么是JVM</h3><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>Java Virtual Machine，JAVA程序的<strong>运行环境</strong>（JAVA二进制字节码的运行环境）</p>
-<h3 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h3><ul>
+<h3 id="好处"><a href="#好处" class="headerlink" title="好处"></a>好处</h3><ul>
 <li>一次编写，到处运行</li>
 <li>自动内存管理，垃圾回收机制</li>
 <li>数组下标越界检查</li>
 </ul>
+<h2 id="二、内存结构"><a href="#二、内存结构" class="headerlink" title="二、内存结构"></a>二、内存结构</h2><h3 id="整体架构"><a href="#整体架构" class="headerlink" title="整体架构"></a><strong>整体架构</strong></h3><p><img src="/ArticleImage/20201002_01.png" srcset="/img/loading.gif" alt="整体架构">  </p>
+<h3 id="1、程序计数器"><a href="#1、程序计数器" class="headerlink" title="1、程序计数器"></a>1、程序计数器</h3><h4 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h4><p>用于保存JVM中下一条所要执行的指令的地址</p>
+<h4 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h4><ul>
+<li><p>线程私有 (每个线程都有自己的程序计数器)</p>
+<ul>
+<li>CPU会为每个线程分配时间片，当当前线程的时间片使用完以后，CPU就会去执行另一个线程中的代码</li>
+<li>程序计数器是<strong>每个线程</strong>所<strong>私有</strong>的，当另一个线程的时间片用完，又返回来执行当前线程的代码时，通过程序计数器可以知道应该执行哪一句指令</li>
+</ul>
+</li>
+<li><p>不会存在内存溢出</p>
+</li>
+</ul>
+<h3 id="2、虚拟机栈"><a href="#2、虚拟机栈" class="headerlink" title="2、虚拟机栈"></a>2、虚拟机栈</h3><h4 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h4><ul>
+<li>每个<strong>线程</strong>运行需要的内存空间，称为<strong>虚拟机栈</strong></li>
+<li>每个栈由多个<strong>栈帧</strong>组成，对应着每次调用方法时所占用的内存</li>
+<li>每个线程只能有<strong>一个活动栈帧</strong>，对应着<strong>当前正在执行的方法</strong></li>
+</ul>
+<h4 id="演示"><a href="#演示" class="headerlink" title="演示"></a>演示</h4><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> </span>&#123;
+	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;
+		method1();
+	&#125;
 
+	<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">method1</span><span class="hljs-params">()</span> </span>&#123;
+		method2(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>);
+	&#125;
+
+	<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">method2</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b)</span> </span>&#123;
+		<span class="hljs-keyword">int</span> c = a + b;
+		<span class="hljs-keyword">return</span> c;
+	&#125;
+&#125;</code></pre>
+
+<p>每执行一个方法就把栈帧压入栈中，执行完后就弹出栈</p>
+<p><img src="/ArticleImage/20201003_01.png" srcset="/img/loading.gif" alt="虚拟栈演示"> </p>
+<h4 id="问题辨析"><a href="#问题辨析" class="headerlink" title="问题辨析"></a>问题辨析</h4><ol>
+<li><p>垃圾回收是否涉及栈内存?</p>
+<p><strong>不需要</strong>。因为虚拟机栈中是由一个个栈帧组成的，在方法执行完毕后，对应的栈帧就会被弹出栈。所以无需通过垃圾回收机制去回收内存。</p>
+</li>
+<li><p>栈内存分配越大越好吗?</p>
+<p>不是。因为<strong>物理内存是一定的</strong>，栈内存越大，可以支持更多的递归调用，但是可执行的线程数就会越少。</p>
+</li>
+<li><p>方法内的局部变量是否安全</p>
+<p>如果方法内<strong>局部变量没有逃离方法的作用范围</strong>，则是<strong>线程安全</strong>的</p>
+<p>如果如果<strong>局部变量引用了对象</strong>，并<strong>逃离了方法的作用范围</strong>，则需要考虑线程安全问题</p>
+</li>
+</ol>
+<h4 id="栈内存溢出"><a href="#栈内存溢出" class="headerlink" title="栈内存溢出"></a>栈内存溢出</h4>
             </div>
             <hr>
             <div>
