@@ -177,7 +177,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      879 字
+      2.7k 字
     </span>
   
 
@@ -187,7 +187,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      9
+      33
        分钟
     </span>
   
@@ -229,7 +229,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：October 3, 2020 pm
+                  本文最后更新于：October 5, 2020 pm
                 
               </p>
             
@@ -314,6 +314,190 @@
 <li><p><strong>jvirsalvm</strong></p>
 </li>
 </ul>
+<h3 id="5、方法区"><a href="#5、方法区" class="headerlink" title="5、方法区"></a>5、方法区</h3><h4 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h4><p><img src="/ArticleImage/20201004_01.png" srcset="/img/loading.gif" alt="方法区结构"></p>
+<h4 id="内存溢出"><a href="#内存溢出" class="headerlink" title="内存溢出"></a>内存溢出</h4><ul>
+<li>1.8以前会导致<strong>永久代</strong>内存溢出 <strong>java.lang.OutofMemoryError</strong> ：PermGen space</li>
+<li>1.8以后会导致<strong>元空间</strong>内存溢出 <strong>java.lang.OutofMemoryError</strong> ：Metaspace </li>
+</ul>
+<h4 id="常量池"><a href="#常量池" class="headerlink" title="常量池"></a>常量池</h4><p>二进制字节码的组成：类的基本信息、常量池、类的方法定义（包含了虚拟机指令）</p>
+<p><strong>通过反编译来查看类的信息</strong></p>
+<h4 id="运行时常量池"><a href="#运行时常量池" class="headerlink" title="运行时常量池"></a>运行时常量池</h4><ul>
+<li><p>常量池</p>
+<ul>
+<li>就是一张表（如上图中的constant pool），虚拟机指令根据这张常量表找到要执行的类名、方法名、参数类型、字面量信息</li>
+</ul>
+</li>
+<li><p>运行时常量池</p>
+<ul>
+<li><p>常量池是*.class文件中的，当该<strong>类被加载以后</strong>，它的常量池信息就会<strong>放入运行时常量池</strong>，并把里面的<strong>符号地址变为真实地址</strong>常量池与串池的关系</p>
+<h5 id="串池StringTable"><a href="#串池StringTable" class="headerlink" title="串池StringTable"></a><strong>串池</strong>StringTable</h5><p><strong>特征</strong></p>
+<ul>
+<li>常量池中的字符串仅是符号，只有<strong>在被用到时才会转化为对象</strong></li>
+<li>利用串池的机制，来避免重复创建字符串对象</li>
+<li>字符串<strong>变量</strong>拼接的原理是<strong>StringBuilder</strong>(1.8)</li>
+<li>字符串<strong>常量</strong>拼接的原理是<strong>编译器优化</strong></li>
+<li>可以使用<strong>intern方法</strong>，主动将串池中还没有的字符串对象放入串池中</li>
+<li><strong>注意</strong>：无论是串池还是堆里面的字符串，都是对象</li>
+</ul>
+<p>用来放字符串对象且里面的<strong>元素不重复</strong></p>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">StringTableStudy</span> </span>&#123;
+	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;
+		String a = <span class="hljs-string">&quot;a&quot;</span>; 
+		String b = <span class="hljs-string">&quot;b&quot;</span>;
+		String ab = <span class="hljs-string">&quot;ab&quot;</span>;
+	&#125;
+&#125;</code></pre>
+
+<p>常量池中的信息，都会被加载到运行时常量池中，但这是a b ab 仅是常量池中的符号，<strong>还没有成为java字符串</strong></p>
+<pre><code class="hljs java">0: ldc           #2                  // String a
+<span class="hljs-number">2</span>: astore_1
+3: ldc           #3                  // String b
+<span class="hljs-number">5</span>: astore_2
+6: ldc           #4                  // String ab
+<span class="hljs-number">8</span>: astore_3
+<span class="hljs-number">9</span>: <span class="hljs-keyword">return</span></code></pre>
+
+<p>当执行到 ldc #2 时，会把符号 a 变为 “a” 字符串对象，<strong>并放入串池中</strong>（hashtable结构 不可扩容）</p>
+<p>当执行到 ldc #3 时，会把符号 b 变为 “b” 字符串对象，并放入串池中</p>
+<p>当执行到 ldc #4 时，会把符号 ab 变为 “ab” 字符串对象，并放入串池中</p>
+<p>最终<strong>StringTable [“a”, “b”, “ab”]</strong></p>
+<p><strong>注意</strong>：字符串对象的创建都是<strong>懒惰的</strong>，只有当运行到那一行字符串且在串池中不存在的时候（如 ldc #2）时，该字符串才会被创建并放入串池中。</p>
+<p>使用拼接<strong>字符串变量对象</strong>创建字符串的过程</p>
+<pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">StringTableStudy</span> </span>&#123;
+	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;
+		String a = <span class="hljs-string">&quot;a&quot;</span>;
+		String b = <span class="hljs-string">&quot;b&quot;</span>;
+		String ab = <span class="hljs-string">&quot;ab&quot;</span>;
+		<span class="hljs-comment">//拼接字符串对象来创建新的字符串</span>
+		String ab2 = a+b; 
+	&#125;
+&#125;</code></pre>
+
+<p>反编译后的结果</p>
+<pre><code class="hljs java">	 Code:
+      stack=<span class="hljs-number">2</span>, locals=<span class="hljs-number">5</span>, args_size=<span class="hljs-number">1</span>
+         0: ldc           #2                  // String a
+         <span class="hljs-number">2</span>: astore_1
+         3: ldc           #3                  // String b
+         <span class="hljs-number">5</span>: astore_2
+         6: ldc           #4                  // String ab
+         <span class="hljs-number">8</span>: astore_3
+         9: new           #5                  // class java/lang/StringBuilder
+        <span class="hljs-number">12</span>: dup
+        13: invokespecial #6                  // Method java/lang/StringBuilder.&quot;&lt;init&gt;&quot;:()V
+        <span class="hljs-number">16</span>: aload_1
+        17: invokevirtual #7                  // Method java/lang/StringBuilder.append:(Ljava/lang/String
+;)Ljava/lang/StringBuilder;
+        <span class="hljs-number">20</span>: aload_2
+        21: invokevirtual #7                  // Method java/lang/StringBuilder.append:(Ljava/lang/String
+;)Ljava/lang/StringBuilder;
+        24: invokevirtual #8                  // Method java/lang/StringBuilder.toString:()Ljava/lang/Str
+ing;
+        <span class="hljs-number">27</span>: astore        <span class="hljs-number">4</span>
+        <span class="hljs-number">29</span>: <span class="hljs-keyword">return</span></code></pre>
+
+<p>通过拼接的方式来创建字符串的<strong>过程</strong>是：StringBuilder().append(“a”).append(“b”).toString()</p>
+<p>最后的toString方法的返回值是一个<strong>新的字符串</strong>，但字符串的<strong>值</strong>和拼接的字符串一致，但是两个不同的字符串，<strong>一个存在于串池之中，一个存在于堆内存之中</strong></p>
+<pre><code class="hljs java">String ab = <span class="hljs-string">&quot;ab&quot;</span>;
+String ab2 = a+b;
+<span class="hljs-comment">//结果为false,因为ab是存在于串池之中，ab2是由StringBuffer的toString方法所返回的一个对象，存在于堆内存之中</span>
+System.out.println(ab == ab2);</code></pre>
+
+<p>使用<strong>拼接字符串常量对象</strong>的方法创建字符串</p>
+<pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">StringTableStudy</span> </span>&#123;
+	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;
+		String a = <span class="hljs-string">&quot;a&quot;</span>;
+		String b = <span class="hljs-string">&quot;b&quot;</span>;
+		String ab = <span class="hljs-string">&quot;ab&quot;</span>;
+		String ab2 = a+b;
+		<span class="hljs-comment">//使用拼接字符串的方法创建字符串</span>
+		String ab3 = <span class="hljs-string">&quot;a&quot;</span> + <span class="hljs-string">&quot;b&quot;</span>;
+	&#125;
+&#125;</code></pre>
+
+<p>反编译后的结果</p>
+<pre><code class="hljs java">  Code:
+      stack=<span class="hljs-number">2</span>, locals=<span class="hljs-number">6</span>, args_size=<span class="hljs-number">1</span>
+         0: ldc           #2                  // String a
+         <span class="hljs-number">2</span>: astore_1
+         3: ldc           #3                  // String b
+         <span class="hljs-number">5</span>: astore_2
+         6: ldc           #4                  // String ab
+         <span class="hljs-number">8</span>: astore_3
+         9: new           #5                  // class java/lang/StringBuilder
+        <span class="hljs-number">12</span>: dup
+        13: invokespecial #6                  // Method java/lang/StringBuilder.&quot;&lt;init&gt;&quot;:()V
+        <span class="hljs-number">16</span>: aload_1
+        17: invokevirtual #7                  // Method java/lang/StringBuilder.append:(Ljava/lang/String
+;)Ljava/lang/StringBuilder;
+        <span class="hljs-number">20</span>: aload_2
+        21: invokevirtual #7                  // Method java/lang/StringBuilder.append:(Ljava/lang/String
+;)Ljava/lang/StringBuilder;
+        24: invokevirtual #8                  // Method java/lang/StringBuilder.toString:()Ljava/lang/Str
+ing;
+        <span class="hljs-number">27</span>: astore        <span class="hljs-number">4</span>
+        <span class="hljs-comment">//ab3初始化时直接从串池中获取字符串</span>
+        29: ldc           #4                  // String ab
+        <span class="hljs-number">31</span>: astore        <span class="hljs-number">5</span>
+        <span class="hljs-number">33</span>: <span class="hljs-keyword">return</span></code></pre>
+
+<ul>
+<li>使用<strong>拼接字符串常量</strong>的方法来创建新的字符串时，因为<strong>内容是常量，javac在编译期会进行优化，结果已在编译期确定为ab</strong>，而创建ab的时候已经在串池中放入了“ab”，所以ab3直接从串池中获取值，所以进行的操作和 ab = “ab” 一致。</li>
+<li>使用<strong>拼接字符串变量</strong>的方法来创建新的字符串时，因为内容是变量，只能<strong>在运行期确定它的值，所以需要使用StringBuffer来创建</strong></li>
+</ul>
+<h5 id="intern方法-1-8"><a href="#intern方法-1-8" class="headerlink" title="intern方法 1.8"></a>intern方法 1.8</h5><p>调用字符串对象的intern方法，会将该字符串对象尝试放入到串池中</p>
+<ul>
+<li>如果串池中没有该字符串对象，则放入成功</li>
+<li>如果有该字符串对象，则放入失败</li>
+</ul>
+<p>无论放入是否成功，都会返回<strong>串池中</strong>的字符串对象</p>
+<p><strong>注意</strong>：此时如果调用intern方法成功，堆内存与串池中的字符串对象是同一个对象；如果失败，则不是同一个对象</p>
+<p><strong>例1</strong></p>
+<pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> </span>&#123;
+	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;
+		<span class="hljs-comment">//&quot;a&quot; &quot;b&quot; 被放入串池中，str则存在于堆内存之中</span>
+		String str = <span class="hljs-keyword">new</span> String(<span class="hljs-string">&quot;a&quot;</span>) + <span class="hljs-keyword">new</span> String(<span class="hljs-string">&quot;b&quot;</span>);
+		<span class="hljs-comment">//调用str的intern方法，这时串池中没有&quot;ab&quot;，则会将该字符串对象放入到串池中，此时堆内存与串池中的&quot;ab&quot;是同一个对象</span>
+		String st2 = str.intern();
+		<span class="hljs-comment">//给str3赋值，因为此时串池中已有&quot;ab&quot;，则直接将串池中的内容返回</span>
+		String str3 = <span class="hljs-string">&quot;ab&quot;</span>;
+		<span class="hljs-comment">//因为堆内存与串池中的&quot;ab&quot;是同一个对象，所以以下两条语句打印的都为true</span>
+		System.out.println(str == st2);
+		System.out.println(str == str3);
+	&#125;
+&#125;</code></pre>
+
+<p><strong>例2</strong></p>
+<pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> </span>&#123;
+	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;
+        <span class="hljs-comment">//此处创建字符串对象&quot;ab&quot;，因为串池中还没有&quot;ab&quot;，所以将其放入串池中</span>
+		String str3 = <span class="hljs-string">&quot;ab&quot;</span>;
+        <span class="hljs-comment">//&quot;a&quot; &quot;b&quot; 被放入串池中，str则存在于堆内存之中</span>
+		String str = <span class="hljs-keyword">new</span> String(<span class="hljs-string">&quot;a&quot;</span>) + <span class="hljs-keyword">new</span> String(<span class="hljs-string">&quot;b&quot;</span>);
+        <span class="hljs-comment">//此时因为在创建str3时，&quot;ab&quot;已存在与串池中，所以放入失败，但是会返回串池中的&quot;ab&quot;</span>
+		String str2 = str.intern();
+        <span class="hljs-comment">//false</span>
+		System.out.println(str == str2);
+        <span class="hljs-comment">//false</span>
+		System.out.println(str == str3);
+        <span class="hljs-comment">//true</span>
+		System.out.println(str2 == str3);
+	&#125;
+&#125;</code></pre>
+
+<p>​        </p>
+<h5 id="intern方法-1-6"><a href="#intern方法-1-6" class="headerlink" title="intern方法 1.6"></a>intern方法 1.6</h5><p>调用字符串对象的intern方法，会将该字符串对象尝试放入到串池中</p>
+<ul>
+<li>如果串池中没有该字符串对象，会将该字符串对象复制一份，再放入到串池中</li>
+<li>如果有该字符串对象，则放入失败</li>
+</ul>
+<p>无论放入是否成功，都会返回<strong>串池中</strong>的字符串对象</p>
+<p><strong>注意</strong>：此时无论调用intern方法成功与否，串池中的字符串对象和堆内存中的字符串对象<strong>都不是同一个对象</strong></p>
+<h4 id="StringTable-垃圾回收"><a href="#StringTable-垃圾回收" class="headerlink" title="StringTable 垃圾回收"></a>StringTable 垃圾回收</h4><p>StringTable在内存紧张时，会发生垃圾回收</p>
 
             </div>
             <hr>
