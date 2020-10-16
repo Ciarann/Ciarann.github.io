@@ -177,7 +177,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      739 字
+      1.6k 字
     </span>
   
 
@@ -187,7 +187,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      10
+      22
        分钟
     </span>
   
@@ -229,12 +229,12 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：October 15, 2020 pm
+                  本文最后更新于：October 16, 2020 pm
                 
               </p>
             
             <div class="markdown-body" id="post-body">
-              <h1 id="一、SpringBoot入门"><a href="#一、SpringBoot入门" class="headerlink" title="一、SpringBoot入门"></a>一、SpringBoot入门</h1><h2 id="1、SpringBoot简介"><a href="#1、SpringBoot简介" class="headerlink" title="1、SpringBoot简介"></a>1、SpringBoot简介</h2><p>简化新Spring应用的初始搭建以及开发过程 </p>
+              <h1 id="SpringBoot学习"><a href="#SpringBoot学习" class="headerlink" title="SpringBoot学习"></a>SpringBoot学习</h1><h1 id="一、SpringBoot入门"><a href="#一、SpringBoot入门" class="headerlink" title="一、SpringBoot入门"></a>一、SpringBoot入门</h1><h2 id="1、SpringBoot简介"><a href="#1、SpringBoot简介" class="headerlink" title="1、SpringBoot简介"></a>1、SpringBoot简介</h2><p>简化新Spring应用的初始搭建以及开发过程 </p>
 <h2 id="2、SpringBoot-HelloWorld"><a href="#2、SpringBoot-HelloWorld" class="headerlink" title="2、SpringBoot HelloWorld"></a>2、SpringBoot HelloWorld</h2><p>一个功能:</p>
 <p>浏览器发送Web请求，服务器接收并处理，响应HelloWorld字符串;</p>
 <ul>
@@ -405,6 +405,131 @@
 <li>占位符获取之前配置的值，如果没有可以用冒号（：）　指定默认值</li>
 </ul>
 <h2 id="3、Profile"><a href="#3、Profile" class="headerlink" title="3、Profile"></a>3、Profile</h2><h4 id="1-多Profile文件"><a href="#1-多Profile文件" class="headerlink" title="1.多Profile文件"></a>1.多Profile文件</h4><p>我们在主配置文件编写的时候，文件名可以是 application-{profile}.properties/yml</p>
+<p>默认使用application.properties</p>
+<h4 id="2-yml支持多文档块方式"><a href="#2-yml支持多文档块方式" class="headerlink" title="2.yml支持多文档块方式"></a>2.yml支持多文档块方式</h4><pre><code class="hljs yaml"><span class="hljs-attr">server:</span>
+	<span class="hljs-attr">port:</span> <span class="hljs-number">8081</span>
+<span class="hljs-attr">spring:</span> 
+	<span class="hljs-attr">profiles:</span> 
+		<span class="hljs-attr">active:</span> <span class="hljs-string">dev/prod</span>
+<span class="hljs-meta">---</span>
+<span class="hljs-attr">server:</span> 
+	<span class="hljs-attr">port:</span> <span class="hljs-number">8083</span>
+<span class="hljs-attr">spring:</span> 
+	<span class="hljs-attr">profiles:</span> <span class="hljs-string">dev</span>
+<span class="hljs-meta">---</span>
+
+<span class="hljs-attr">server:</span> 
+	<span class="hljs-attr">port:</span> <span class="hljs-number">8084</span>
+<span class="hljs-attr">spring:</span> 
+	<span class="hljs-attr">profiles:</span> <span class="hljs-string">prod</span></code></pre>
+
+
+
+<h4 id="3-指定激活配置文件"><a href="#3-指定激活配置文件" class="headerlink" title="3.指定激活配置文件"></a>3.指定激活配置文件</h4><ul>
+<li><p>properties文件中加入 spring.profiles.active=dev </p>
+</li>
+<li><p>可以在命令行中加入 –spring.profiles.active=dev </p>
+</li>
+<li><p>虚拟机参数 Dspring.profiles.active=dev 优先</p>
+</li>
+</ul>
+<h2 id="4、配置文件扫描位置"><a href="#4、配置文件扫描位置" class="headerlink" title="4、配置文件扫描位置"></a>4、配置文件扫描位置</h2><p><img src="/SpringbootImage/20201015_01.png" srcset="/img/loading.gif" alt="内部配置文件加载顺序"></p>
+<p>SpringBoot 会从这四个位置文件中全部加载文件 互补配置</p>
+<h2 id="5、外部配置加载顺序"><a href="#5、外部配置加载顺序" class="headerlink" title="5、外部配置加载顺序"></a>5、外部配置加载顺序</h2><p><img src="/SpringbootImage/20201015_02.png" srcset="/img/loading.gif" alt="外部配置文件加载顺序"></p>
+<h2 id="6、自动配置加载原理"><a href="#6、自动配置加载原理" class="headerlink" title="6、自动配置加载原理"></a>6、自动配置加载原理</h2><h3 id="1、原理"><a href="#1、原理" class="headerlink" title="1、原理"></a>1、原理</h3><ul>
+<li>1.springBoot启动会加载大量的自动配置类</li>
+<li>2.我们看我们需要的功能有没有Springboot默认写好的自动配置类</li>
+<li>3.我们再来看这个自动配置类到底配置了哪些组件</li>
+<li>4.给容器配置组件的时候会从properties中获取某些属性，我们就可以在配置文件中指定这些属性的值</li>
+</ul>
+<h3 id="2、细节"><a href="#2、细节" class="headerlink" title="2、细节"></a>2、细节</h3><p>@<strong>Conditional</strong> 派生详解</p>
+<p>作用: 必须是@conditional指定的条件成立，才给容器添加组件，配置配的里面所有内容才生效</p>
+<p><img src="/SpringbootImage/20201015_03.png" srcset="/img/loading.gif" alt="细节"></p>
+<p>==自动配置类必须在一定的条件下才能生效==</p>
+<p>可以在配置文件下输入 debug=true属性 在控制台生成自动打印开启了哪些自动配置报告</p>
+<h1 id="三、SpringBoot与日志"><a href="#三、SpringBoot与日志" class="headerlink" title="三、SpringBoot与日志"></a>三、SpringBoot与日志</h1><h2 id="1、选择工具"><a href="#1、选择工具" class="headerlink" title="1、选择工具"></a>1、选择工具</h2><p>SLF4j和Logback</p>
+<h2 id="2、SLF4j的使用"><a href="#2、SLF4j的使用" class="headerlink" title="2、SLF4j的使用"></a>2、SLF4j的使用</h2><pre><code class="hljs java"><span class="hljs-keyword">import</span> org.slf4j.Logger;
+<span class="hljs-keyword">import</span> org.slf4j.LoggerFactory;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HelloWorld</span> </span>&#123;
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;
+    Logger logger = LoggerFactory.getLogger(HelloWorld.class);
+    logger.info(<span class="hljs-string">&quot;Hello World&quot;</span>);
+  &#125;
+&#125;</code></pre>
+
+<p>如何让系统中所有日志都统一到slf4j</p>
+<ul>
+<li>将系统中其他日志框架排除出去</li>
+<li>用中间包替换原有的日志框架</li>
+<li>导入slf4j的实现</li>
+</ul>
+<h2 id="3、日志使用"><a href="#3、日志使用" class="headerlink" title="3、日志使用"></a>3、日志使用</h2><p>SpringBoot已经默认配置好了日志</p>
+<pre><code class="hljs java">Logger logger = LoggerFactory.getLogger(getClass());
+
+        <span class="hljs-comment">//日志级别由高到低 error warn info debug trace</span>
+        logger.trace(<span class="hljs-string">&quot;这是trace日志&quot;</span>);
+        logger.debug(<span class="hljs-string">&quot;这是debug信息&quot;</span>);
+        <span class="hljs-comment">//springboot默认输出 info级别以上的</span>
+        logger.info(<span class="hljs-string">&quot;这是info日志&quot;</span>);
+        logger.warn(<span class="hljs-string">&quot;这是warn信息&quot;</span>);
+        logger.error(<span class="hljs-string">&quot;这是error日志&quot;</span>);</code></pre>
+
+<pre><code class="hljs yml"><span class="hljs-string">日志输出格式:</span> 
+		<span class="hljs-string">%d表示日期时间</span>
+		<span class="hljs-string">%thread表示线程名</span>
+		<span class="hljs-string">%-5level</span> <span class="hljs-string">级别</span>
+		<span class="hljs-string">%logger&#123;50&#125;</span> <span class="hljs-string">logger名字字符数量</span>
+		<span class="hljs-string">%msg</span> <span class="hljs-string">日志消息</span>
+		<span class="hljs-string">%n换行</span>
+	<span class="hljs-string">--&gt;</span>
+<span class="hljs-string">logging.pattern.file=%d&#123;yyyy-mm-dd&#125;</span> <span class="hljs-string">==</span> [<span class="hljs-string">%thread</span>] <span class="hljs-string">===</span> <span class="hljs-string">%-5level</span> <span class="hljs-string">===</span> <span class="hljs-string">%logger&#123;50&#125;</span> <span class="hljs-string">===</span> <span class="hljs-string">%msg%n</span> <span class="hljs-string">文件内</span>
+<span class="hljs-string">logging.pattern.console=%d&#123;yyyy-mm-dd&#125;</span> <span class="hljs-string">==</span> [<span class="hljs-string">%thread</span>] <span class="hljs-string">===</span> <span class="hljs-string">%-5level</span> <span class="hljs-string">===</span> <span class="hljs-string">%logger&#123;50&#125;</span> <span class="hljs-string">===</span> <span class="hljs-string">%msg%n</span> <span class="hljs-string">控制台</span></code></pre>
+
+<h2 id="4、日志指定配置"><a href="#4、日志指定配置" class="headerlink" title="4、日志指定配置"></a>4、日志指定配置</h2><p>在类路径下放上每个日志框架自己的配置文件，SpringBoot就不会采用它的默认框架了</p>
+<p>Logback 可以采用logback.xml 或者 logback-spring.xml</p>
+<p>推荐使用logback-spring.xml 可以使用springboot中的Profile </p>
+<pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">SpringProfile</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;XXX&quot;</span>&gt;</span>
+	XXXXX
+<span class="hljs-tag">&lt;/<span class="hljs-name">SpringProfile</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">SpringProfile</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;!XXX&quot;</span>&gt;</span>
+	XXXXX
+<span class="hljs-tag">&lt;/<span class="hljs-name">SpringProfile</span>&gt;</span></code></pre>
+
+<h1 id="四、SpringBoot与Web开发"><a href="#四、SpringBoot与Web开发" class="headerlink" title="四、SpringBoot与Web开发"></a>四、SpringBoot与Web开发</h1><h2 id="1-SpringBoot对静态资源的映射规则"><a href="#1-SpringBoot对静态资源的映射规则" class="headerlink" title="1.SpringBoot对静态资源的映射规则"></a>1.SpringBoot对静态资源的映射规则</h2><p>1.所有/webjars/**，都去classpath:/META-INF/resources/webjars/找资源</p>
+<p>webjars: 以jar包的方式引入静态资源</p>
+<p><img src="/SpringbootImage/20201015_04.png" srcset="/img/loading.gif" alt="静态资源"></p>
+<p>local host:8080/webjars/jquery/3.4.1/jquery.js</p>
+<p>2./** 访问当前项目的任何资源”</p>
+<pre><code class="hljs java">classpath:/META-INF/resources/
+classpath:/resources/
+classpath:/<span class="hljs-keyword">static</span>/
+classpath:/<span class="hljs-keyword">public</span>/
+/</code></pre>
+
+<h2 id="2-模板引擎"><a href="#2-模板引擎" class="headerlink" title="2.模板引擎"></a>2.模板引擎</h2><p>SpringBoot 推荐 thymeleaf</p>
+<p>首先引入thymeleaf</p>
+<pre><code class="hljs java">&lt;dependency&gt;
+           &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+           &lt;artifactId&gt;spring-boot-starter-thymeleaf&lt;/artifactId&gt;
+       &lt;/dependency&gt;</code></pre>
+
+<pre><code class="hljs dust"><span class="xml"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-meta-keyword">html</span>&gt;</span></span>
+<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;en&quot;</span> <span class="hljs-attr">xmlns:th</span>=<span class="hljs-string">&quot;http://www.thymeleaf.org&quot;</span>&gt;</span></span>
+<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span></span>
+<span class="xml">    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</span></span>
+<span class="xml">    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Title<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span></span>
+<span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span></span>
+<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span></span>
+<span class="xml">    <span class="hljs-tag">&lt;<span class="hljs-name">h3</span>&gt;</span>成功<span class="hljs-tag">&lt;/<span class="hljs-name">h3</span>&gt;</span></span>
+<span class="xml">    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">th:text</span>=<span class="hljs-string">&quot;$</span></span></span><span class="hljs-template-variable">&#123;hello&#125;</span><span class="xml"><span class="hljs-tag"><span class="hljs-string">&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+<span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span></span>
+<span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span></span></code></pre>
+
+<ul>
+<li>thymeleaf语法规则</li>
+</ul>
+<p><img src="/SpringbootImage/20201015_05.png" srcset="/img/loading.gif"></p>
 
             </div>
             <hr>
