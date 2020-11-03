@@ -17,7 +17,7 @@
   <meta name="description" content="">
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
-  <title>Springboot - Hexo</title>
+  <title>Hexo</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 
@@ -177,7 +177,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.6k 字
+      2.3k 字
     </span>
   
 
@@ -187,7 +187,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      22
+      33
        分钟
     </span>
   
@@ -225,11 +225,11 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto" id="post">
             <!-- SEO header -->
-            <h1 style="display: none">Springboot</h1>
+            <h1 style="display: none"></h1>
             
               <p class="note note-info">
                 
-                  本文最后更新于：October 16, 2020 pm
+                  本文最后更新于：November 2, 2020 pm
                 
               </p>
             
@@ -530,6 +530,177 @@ classpath:/<span class="hljs-keyword">public</span>/
 <li>thymeleaf语法规则</li>
 </ul>
 <p><img src="/SpringbootImage/20201015_05.png" srcset="/img/loading.gif"></p>
+<h2 id="3、扩展SpringMVC"><a href="#3、扩展SpringMVC" class="headerlink" title="3、扩展SpringMVC"></a>3、扩展SpringMVC</h2><p>例如 SpringMVC的xml配置</p>
+<pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">mvc:view-controller</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;/hello&quot;</span> <span class="hljs-attr">view-names</span>=<span class="hljs-string">&quot;success&quot;</span>/&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">mvc:interceptors</span>&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">mvc:interceptor</span>&gt;</span>
+    	<span class="hljs-tag">&lt;<span class="hljs-name">mvc:mapping</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;/hello&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">mvc:mapping</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">bean</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">mvc:interceptor</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">mvc:interceptors</span>&gt;</span></code></pre>
+
+<p>我们可以编写一个SpringBoot配置类</p>
+<pre><code class="hljs java"><span class="hljs-meta">@Configuration</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyMvcConfig</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">WebMvcConfigurer</span> </span>&#123;
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">addViewControllers</span><span class="hljs-params">(ViewControllerRegistry registry)</span> </span>&#123;
+        <span class="hljs-comment">//浏览器发送atguigu请求，来到success页面</span>
+        registry.addViewController(<span class="hljs-string">&quot;/atguigu&quot;</span>).setViewName(<span class="hljs-string">&quot;success&quot;</span>);
+    &#125;
+&#125;</code></pre>
+
+<h2 id="4、RestfulCRUD"><a href="#4、RestfulCRUD" class="headerlink" title="4、RestfulCRUD"></a>4、RestfulCRUD</h2><p>1.默认访问首页</p>
+<p>可以用</p>
+<pre><code class="hljs java"><span class="hljs-meta">@RequestMapping(&#123;&quot;/&quot;,&quot;/index.html&quot;&#125;)</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">index</span><span class="hljs-params">()</span></span>&#123;
+        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;index&quot;</span>;
+    &#125;</code></pre>
+
+<p>或者</p>
+<p>添加视图映射 在MyMvcConfig里添加</p>
+<pre><code class="hljs java"><span class="hljs-meta">@Configuration</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyMvcConfig</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">WebMvcConfigurer</span> </span>&#123;
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">addViewControllers</span><span class="hljs-params">(ViewControllerRegistry registry)</span> </span>&#123;
+        <span class="hljs-comment">//浏览器发送atguigu请求，来到success页面</span>
+        registry.addViewController(<span class="hljs-string">&quot;/atguigu&quot;</span>).setViewName(<span class="hljs-string">&quot;success&quot;</span>);
+        registry.addViewController(<span class="hljs-string">&quot;/&quot;</span>).setViewName(<span class="hljs-string">&quot;login&quot;</span>);
+    &#125;
+
+&#125;</code></pre>
+
+<p>==registry.addViewController(“/“).setViewName(“login”);==</p>
+<p>2.页面切换语言</p>
+<p>在SpringMVC中需要使用ResourceBundleMessageSource管理国际化资源文件</p>
+<p>在页面fmt:message取出国际化内容</p>
+<p>springboot中</p>
+<p><img src="/SpringbootImage/20201016_01.png" srcset="/img/loading.gif"></p>
+<p>3.去页面获取国际化值</p>
+<p>国际化Locale(区域信息对象); LocaleResolver</p>
+<pre><code class="hljs java"><span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Locale <span class="hljs-title">resolveLocale</span><span class="hljs-params">(HttpServletRequest request)</span> </span>&#123;
+        String l = request.getParameter(<span class="hljs-string">&quot;l&quot;</span>);
+        Locale locale = Locale.getDefault();
+        <span class="hljs-keyword">if</span>(!StringUtils.isEmpty(l))&#123;
+            String[] split = l.split(<span class="hljs-string">&quot;_&quot;</span>);
+            locale = <span class="hljs-keyword">new</span> Locale(split[<span class="hljs-number">0</span>],split[<span class="hljs-number">1</span>]);
+        &#125;
+        <span class="hljs-keyword">return</span> locale;
+    &#125;</code></pre>
+
+<pre><code class="hljs java"><span class="hljs-meta">@Bean</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> LocaleResolver <span class="hljs-title">localeResolver</span><span class="hljs-params">()</span></span>&#123;
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> MyLocaleResolver();
+    &#125;</code></pre>
+
+<p>4.登录拦截器检查</p>
+<pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LoginHandlerInterceptor</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">HandlerInterceptor</span> </span>&#123;
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">preHandle</span><span class="hljs-params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;
+        Object user = request.getSession().getAttribute(<span class="hljs-string">&quot;loginUser&quot;</span>);
+        <span class="hljs-keyword">if</span>(user == <span class="hljs-keyword">null</span>)&#123;
+            request.setAttribute(<span class="hljs-string">&quot;msg&quot;</span>,<span class="hljs-string">&quot;请先登录&quot;</span>);
+            request.getRequestDispatcher(<span class="hljs-string">&quot;/index.html&quot;</span>).forward(request,response);
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+        &#125;<span class="hljs-keyword">else</span> &#123;
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+        &#125;
+    &#125;</code></pre>
+
+<pre><code class="hljs java"><span class="hljs-meta">@Override</span>
+   <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">addInterceptors</span><span class="hljs-params">(InterceptorRegistry registry)</span> </span>&#123;
+       registry.addInterceptor(<span class="hljs-keyword">new</span> LoginHandlerInterceptor()).addPathPatterns(<span class="hljs-string">&quot;/**&quot;</span>)
+               .excludePathPatterns(<span class="hljs-string">&quot;/index.html&quot;</span>,<span class="hljs-string">&quot;/&quot;</span>,<span class="hljs-string">&quot;/user/login&quot;</span>,<span class="hljs-string">&quot;/static/**&quot;</span>,<span class="hljs-string">&quot;/webjars/**&quot;</span>,<span class="hljs-string">&quot;/assert/**&quot;</span>);
+
+   &#125;</code></pre>
+
+
+
+<p>5.员工列表功能</p>
+<p>restfulcrud 满足rest风格</p>
+<p>URI: /资源名称/资源标识 HTTP请求方式区分对资源的CRUD操作</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>普通CRUD</th>
+<th>RestfulCRUD</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>查询</td>
+<td>getEmp</td>
+<td>emp—-GET</td>
+</tr>
+<tr>
+<td>添加</td>
+<td>addEmp?xxx</td>
+<td>emp—-POST</td>
+</tr>
+<tr>
+<td>修改</td>
+<td>updateEmp?id=xxx%xxx</td>
+<td>emp/{id}—-PUT</td>
+</tr>
+<tr>
+<td>删除</td>
+<td>deleteEmp?id=1</td>
+<td>emp/{id}—-DELETE</td>
+</tr>
+</tbody></table>
+<p>实验的请求架构</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>请求RUI</th>
+<th>请求方式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>查询所有员工</td>
+<td>emps</td>
+<td>GET</td>
+</tr>
+<tr>
+<td>查询某个员工</td>
+<td>emps/{id}</td>
+<td>GET</td>
+</tr>
+<tr>
+<td>添加页面</td>
+<td>emp</td>
+<td>GET</td>
+</tr>
+<tr>
+<td>添加员工</td>
+<td>emp</td>
+<td>POST</td>
+</tr>
+<tr>
+<td>修改页面</td>
+<td>emps/{id}</td>
+<td>GET</td>
+</tr>
+<tr>
+<td>修改员工</td>
+<td>emp</td>
+<td>PUT</td>
+</tr>
+<tr>
+<td>删除员工</td>
+<td>emp/{id}</td>
+<td>DELETE</td>
+</tr>
+</tbody></table>
+<p>6.错误处理机制</p>
+<h1 id="五、Docker"><a href="#五、Docker" class="headerlink" title="五、Docker"></a>五、Docker</h1><h2 id="1、简介"><a href="#1、简介" class="headerlink" title="1、简介"></a>1、简介</h2><p><strong>Docker</strong>是一个开源的应用容器引擎</p>
+<p>让开发者可以打包他们的应用以及依赖包到一个可移植的容器中,然后发布到任何流行的<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/Linux">Linux</a>机器或Windows 机器上,也可以实现虚拟化,容器是完全使用沙箱机制,相互之间不会有任何接口。</p>
+<h2 id="2、核心概念"><a href="#2、核心概念" class="headerlink" title="2、核心概念"></a>2、核心概念</h2><p>docker主机(Host)：安装了Docker程序的机器(Docker直接安装在操作系统上)</p>
+<p>docker客户端(Client)：连接docker主机进行操作</p>
+<p>docker仓库(Registry)：用来保存各种打包好的软件镜像</p>
+<p>docker镜像(Images)：软件打包好的镜像 放在docker仓库中</p>
+<p>docker容器(Container)：镜像启动后的实例为一个容器</p>
 
             </div>
             <hr>
@@ -559,6 +730,12 @@ classpath:/<span class="hljs-keyword">public</span>/
                 <div class="post-prevnext row">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2020/11/03/Linux%E5%91%BD%E4%BB%A4/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Linux命令</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
@@ -734,7 +911,7 @@ classpath:/<span class="hljs-keyword">public</span>/
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "Springboot&nbsp;",
+        "&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,

@@ -1,0 +1,1254 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  <title>Linux命令 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    
+  
+
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_pf9vaxs7x7b.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Ciarann</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner intro-2" id="background" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container page-header text-center fade-in-up">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-11-03 16:10" pubdate>
+        November 3, 2020 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      6.3k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      76
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto" id="post">
+            <!-- SEO header -->
+            <h1 style="display: none">Linux命令</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：November 3, 2020 pm
+                
+              </p>
+            
+            <div class="markdown-body" id="post-body">
+              <h1 id="Linux基本命令"><a href="#Linux基本命令" class="headerlink" title="Linux基本命令"></a><strong>Linux</strong>基本命令</h1><h2 id="Linux的简介"><a href="#Linux的简介" class="headerlink" title="Linux的简介"></a><strong>Linux</strong>的简介</h2><p>Linux是一套免费使用和自由传播的类Unix操作系统，是一个基于POSIX和UNIX的多用户、多任务、支持多线程和多CPU的操作系统。它能运行主要的UNIX工具软件、应用程序和网络协议。它支持32位和64位硬件。Linux继承了Unix以网络为核心的设计思想，是一个性能稳定的多用户网络操作系统。</p>
+<p>Linux操作系统诞生于1991 年10 月5 日（这是第一次正式向外公布时间）。Linux存在着许多不同的Linux版本，但它们都使用了Linux内核。Linux可安装在各种计算机硬件设备中，比如手机、平板电脑、路由器、视频游戏控制台、台式计算机、大型机和超级计算机。</p>
+<h1 id="一、文件操作基本命令"><a href="#一、文件操作基本命令" class="headerlink" title="一、文件操作基本命令"></a>一、文件操作基本命令</h1><h3 id="1、ls命令-显示文件"><a href="#1、ls命令-显示文件" class="headerlink" title="1、ls命令(显示文件)"></a><strong>1、ls</strong>命令(显示文件)</h3><ul>
+<li>ls命令的功能是显示指定目录下的<strong>文件目录清单</strong>相当于dos下的dir命令，而且其参数更加丰富多样。</li>
+</ul>
+<h5 id="1-1-ls不带参数"><a href="#1-1-ls不带参数" class="headerlink" title="1.1 ls不带参数"></a>1.1 ls不带参数</h5><pre><code class="hljs properties"><span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]# ls</span>
+<span class="hljs-meta">anaconda-ks.cfg</span> <span class="hljs-string">install.log install.log.syslog</span></code></pre>
+
+<p>功能：显示指定目录中的文件清单，如果没有指定任何目录，则默认为当前目录。</p>
+<h5 id="1-2-显示隐藏文件"><a href="#1-2-显示隐藏文件" class="headerlink" title="1.2 显示隐藏文件"></a><strong>1.2 显示隐藏文件</strong></h5><pre><code class="hljs properties"><span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]# ls -a</span>
+<span class="hljs-meta">anaconda-ks.cfg</span> <span class="hljs-string">.bash_logout  .bashrc install.log     .tcshrc</span>
+<span class="hljs-attr">bash_history</span>  <span class="hljs-string">.bash_profile .cshrc  install.log.syslog</span></code></pre>
+
+<p><strong>参数</strong> <strong>-a</strong> 的功能：显示隐含文件。</p>
+<p>说明：若文件名*<strong>以“.”开头，则认为是隐含的</strong>，进而普通的ls命令不显示以“.”开头的文件；所以要完全显示某目录下的文件清单，必须加上-a参数才行。</p>
+<h5 id="1-3-长格式输出"><a href="#1-3-长格式输出" class="headerlink" title="1.3 长格式输出"></a><strong>1.3 长格式输出</strong></h5><pre><code class="hljs properties"><span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]# ls -l</span>
+<span class="hljs-meta">总用量</span> <span class="hljs-string">24</span>
+<span class="hljs-meta">-rw-------.</span> <span class="hljs-string">1 root root  1116 11月 13 18:15 anaconda-ks.cfg</span>
+<span class="hljs-meta">-rw-r--r--.</span> <span class="hljs-string">1 root root 12526 11月 13 18:15 install.log</span>
+<span class="hljs-meta">-rw-r--r--.</span> <span class="hljs-string">1 root root  3482 11月 13 18:14 install.log.syslog</span></code></pre>
+
+<pre><code class="hljs properties"><span class="hljs-meta">参数-l</span> <span class="hljs-string">的功能是：以长格式列表输出指定目录中的文件清单</span>
+<span class="hljs-attr">以上述输出中文件install.log为例</span>
+ <span class="hljs-attr">解释长格式输出的内容如下：</span>
+<span class="hljs-meta">文件权限</span>       <span class="hljs-string">连接数  属主    属组    大小    日期     时间      文件名</span>
+<span class="hljs-meta">-rw-r--r--.</span>    <span class="hljs-string">1    root   root   12526   11月13 18:15   install.log</span>
+<span class="hljs-attr">Linux文件有三种典型的权限，即r读权限、w写权限和x执行权限。在长格式输出中在文件类型的后面有9列权限位，实际上这是针对不同用户而设定的，如下所示。</span>
+<span class="hljs-meta">属主的权限</span>  <span class="hljs-string">属组的权限  其他用户的权限</span>
+  <span class="hljs-attr">rwx</span>       <span class="hljs-string">rwx         r-x</span></code></pre>
+
+
+
+<h5 id="1-4-递归显示"><a href="#1-4-递归显示" class="headerlink" title="1.4 递归显示"></a><strong>1.4 递归显示</strong></h5><pre><code class="hljs properties"><span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]# ls -R</span>
+<span class="hljs-attr">..</span>
+<span class="hljs-meta">anaconda-ks.cfg</span>  <span class="hljs-string">install.log  install.log.syslog</span>
+<span class="hljs-meta">参数-R</span> <span class="hljs-string">的功能是：递归显示指定目录下的文件清单，</span>
+<span class="hljs-attr">即会显示指定目录分支内各子目录中的文件清单。</span></code></pre>
+
+<h3 id="2、pwd命令（显示当前目录）"><a href="#2、pwd命令（显示当前目录）" class="headerlink" title="2、pwd命令（显示当前目录）"></a>2、pwd命令（显示当前目录）</h3><pre><code class="hljs properties"><span class="hljs-attr">示例：pwd</span>
+<span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]# pwd</span>
+<span class="hljs-attr">/root</span>
+<span class="hljs-attr">功能：显示当前目录。</span></code></pre>
+
+<h3 id="3、mkdir命令（创建目录）"><a href="#3、mkdir命令（创建目录）" class="headerlink" title="3、mkdir命令（创建目录）"></a>3、mkdir命令（创建目录）</h3><pre><code class="hljs properties"><span class="hljs-attr">（1）mkdir示例一</span>
+<span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]# mkdir abc</span>
+<span class="hljs-attr">功能：在当前目录下创建目录abc</span>
+<span class="hljs-attr">（2）mkdir示例二——创建多级目录</span>
+<span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]# mkdir -p a/b/c</span>
+<span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]# ls -R a</span>
+<span class="hljs-attr">a</span>:<span class="hljs-string"></span>
+<span class="hljs-attr">b</span>
+<span class="hljs-meta">a/b</span>:<span class="hljs-string"></span>
+
+<span class="hljs-attr">c</span>
+
+<span class="hljs-meta">a/b/c</span>:<span class="hljs-string">功能：参数-p功能是如果要创建的目录的父目录不存在，则先创建其父目录，再创建该目录； 如果指定的目录存在，则不影响原目录，也不会报错。在本示例中会连续创建a目录、a/b目录、a/b/c目录。</span></code></pre>
+
+<h3 id="4、cd命令"><a href="#4、cd命令" class="headerlink" title="4、cd命令"></a>4、cd命令</h3><pre><code class="hljs properties"><span class="hljs-attr">cd</span> <span class="hljs-string">XX 		进入目录</span>
+<span class="hljs-attr">cd</span> <span class="hljs-string">.. 		返回上一级目录</span>
+<span class="hljs-attr">cd</span> <span class="hljs-string">/  		进入根目录</span>
+<span class="hljs-attr">cd</span> <span class="hljs-string">../..	返回上一级目录的上一级目录</span></code></pre>
+
+<h3 id="5、touch命令（创建空文件）"><a href="#5、touch命令（创建空文件）" class="headerlink" title="5、touch命令（创建空文件）"></a>5、touch命令（创建空文件）</h3><h5 id="5-1-创建空文件"><a href="#5-1-创建空文件" class="headerlink" title="5.1 创建空文件"></a>5.1 创建空文件</h5><pre><code class="hljs properties"><span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]# touch myfile</span>
+<span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]# ls -l myfile</span>
+<span class="hljs-meta">-rw-r--r--.</span> <span class="hljs-string">1 root root 0 11月 13 23:48 myfile</span>
+<span class="hljs-attr">功能：如果myfile不存在，则创建一个大小为0字节名为myfile的空文件。</span></code></pre>
+
+<h5 id="5-2-改变文件的最后修改时间"><a href="#5-2-改变文件的最后修改时间" class="headerlink" title="5.2 改变文件的最后修改时间"></a>5.2 改变文件的最后修改时间</h5><pre><code class="hljs properties"><span class="hljs-meta">再执行一次touch</span> <span class="hljs-string">myfile</span>
+<span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]# touch myfile</span>
+<span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]# ls -l myfile</span>
+<span class="hljs-meta">-rw-r--r--.</span> <span class="hljs-string">1 root root 0 11月 13 23:49 myfile</span>
+<span class="hljs-attr">功能：如果myfile已存在，则将改变myfile的最后修改时间。</span></code></pre>
+
+
+
+<h3 id="6、cp命令（复制）"><a href="#6、cp命令（复制）" class="headerlink" title="6、cp命令（复制）"></a>6、cp命令（复制）</h3><h5 id="6-1-复制文件"><a href="#6-1-复制文件" class="headerlink" title="6.1 复制文件"></a>6.1 复制文件</h5><pre><code class="hljs properties"><span class="hljs-attr">（1）cp示例一——复制文件</span>
+<span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]# cp /etc/*   abc</span>
+<span class="hljs-attr">功能：将/etc/目录下的文件复制到目录abc中。“*”是通配符，可以匹配多个字符；“？”只能匹配一个字符。</span></code></pre>
+
+<h5 id="6-2-复制目录"><a href="#6-2-复制目录" class="headerlink" title="6.2 复制目录"></a>6.2 复制目录</h5><pre><code class="hljs properties"><span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]# cp  -R   /etc  abc</span>
+<span class="hljs-attr">功能：增加了参数-Ｒ，就能将目录/etc下面的所有子目录和文件都复制到目录abc中。</span></code></pre>
+
+
+
+<h3 id="7、mv命令（移动，改名）"><a href="#7、mv命令（移动，改名）" class="headerlink" title="7、mv命令（移动，改名）"></a>7、mv命令（移动，改名）</h3><h5 id="7-1-将文件移动到目录中"><a href="#7-1-将文件移动到目录中" class="headerlink" title="7.1 将文件移动到目录中"></a>7.1 将文件移动到目录中</h5><pre><code class="hljs properties"><span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]# mv  myfile  mydir1</span>
+
+<span class="hljs-attr">功能：如果mydir1存在且是个目录，则将文件myfile移动到目录mydir1中。</span></code></pre>
+
+<h5 id="7-2-文件改名"><a href="#7-2-文件改名" class="headerlink" title="7.2 文件改名"></a>7.2 文件改名</h5><pre><code class="hljs properties"><span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]# mv myfile myfile2</span>
+
+<span class="hljs-attr">功能：将文件（或目录）myfile改名为myfile2。</span></code></pre>
+
+
+
+<h3 id="8、rmdir命令（删除空目录）"><a href="#8、rmdir命令（删除空目录）" class="headerlink" title="8、rmdir命令（删除空目录）"></a>8、rmdir命令（删除空目录）</h3><pre><code class="hljs properties"><span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]# rmdir   mydir1</span>
+
+<span class="hljs-attr">功能：删除指定的空目录。</span></code></pre>
+
+
+
+<h3 id="9、rm命令（删除文件）"><a href="#9、rm命令（删除文件）" class="headerlink" title="9、rm命令（删除文件）"></a>9、rm命令（删除文件）</h3><h5 id="9-1-删除文件"><a href="#9-1-删除文件" class="headerlink" title="9.1 删除文件"></a>9.1 删除文件</h5><pre><code class="hljs properties"><span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]# rm  php.ini</span>
+
+<span class="hljs-meta">功能：删除指定的文件</span> <span class="hljs-string">php.ini。</span></code></pre>
+
+<h5 id="9-2-删除目录"><a href="#9-2-删除目录" class="headerlink" title="9.2 删除目录"></a>9.2 删除目录</h5><pre><code class="hljs properties"><span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]# rm  -rf  abc</span>
+
+<span class="hljs-attr">功能：参数-r是递归的意思，即可以删除非空目录；参数-f是强制的意思。</span></code></pre>
+
+
+
+<h3 id="10、cat命令（显示文件内容）"><a href="#10、cat命令（显示文件内容）" class="headerlink" title="10、cat命令（显示文件内容）"></a>10、cat命令（显示文件内容）</h3><h5 id="10-1-显示文件内容"><a href="#10-1-显示文件内容" class="headerlink" title="10.1 显示文件内容"></a>10.1 显示文件内容</h5><pre><code class="hljs properties"><span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]# cat myfile</span>
+
+<span class="hljs-attr">hello,world</span>
+
+<span class="hljs-attr">功能：显示指定文件myfile的内容。</span></code></pre>
+
+<h5 id="10-2-创建文件"><a href="#10-2-创建文件" class="headerlink" title="10.2 创建文件"></a>10.2 创建文件</h5><pre><code class="hljs properties"><span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]# cat  &gt;  myfile2</span>
+
+<span class="hljs-attr">Welcome</span> <span class="hljs-string">to Linux World!</span>
+
+<span class="hljs-attr">按ctrl+d结束输入</span>
+
+<span class="hljs-attr">功能：利用输出重定向符“&gt;”来创建简短的文本文件myfile2。</span></code></pre>
+
+
+
+<h3 id="11、more-和-less命令（分屏显示文件内容）"><a href="#11、more-和-less命令（分屏显示文件内容）" class="headerlink" title="11、more 和 less命令（分屏显示文件内容）"></a>11、more 和 less命令（分屏显示文件内容）</h3><pre><code class="hljs properties"><span class="hljs-comment"># more  /etc/httpd/conf/httpd.conf</span>
+
+<span class="hljs-attr">功能：分屏显示指定文件httpd.conf的内容，非常适合显示超过一屏的文本文件。每按一下空格键，向后翻一屏；每按一次回车键，向后翻一行。</span>
+
+<span class="hljs-attr">说明：less与more功能很相似，只不过less功能更强大，支持PageUp键向前翻屏，及PageDown向后翻屏。</span></code></pre>
+
+
+
+<h3 id="12、head命令（显示文件前面内容）"><a href="#12、head命令（显示文件前面内容）" class="headerlink" title="12、head命令（显示文件前面内容）"></a>12、head命令（显示文件前面内容）</h3><h5 id="12-1-显示文件头10行内容"><a href="#12-1-显示文件头10行内容" class="headerlink" title="12.1 显示文件头10行内容"></a>12.1 显示文件头10行内容</h5><pre><code class="hljs properties"><span class="hljs-comment"># head  /etc/httpd/conf/httpd.conf</span>
+
+<span class="hljs-attr">功能：默认显示指定文件的头10行的内容。</span></code></pre>
+
+<h5 id="12-2-显示文件头n行内容"><a href="#12-2-显示文件头n行内容" class="headerlink" title="12.2 显示文件头n行内容"></a>12.2 显示文件头n行内容</h5><pre><code class="hljs properties"><span class="hljs-comment"># head -n 19 /etc/httpd/conf/httpd.conf</span>
+
+<span class="hljs-attr">功能：参数-n设置显示指定行数，本例会显示文件的头19行的内容。</span></code></pre>
+
+
+
+<h3 id="13、tail命令（显示文件后面内容）"><a href="#13、tail命令（显示文件后面内容）" class="headerlink" title="13、tail命令（显示文件后面内容）"></a>13、tail命令（显示文件后面内容）</h3><h5 id="13-1-显示文件最后10行内容"><a href="#13-1-显示文件最后10行内容" class="headerlink" title="13. 1 显示文件最后10行内容"></a>13. 1 显示文件最后10行内容</h5><pre><code class="hljs properties"><span class="hljs-comment"># tail  /etc/httpd/conf/httpd.conf</span>
+
+<span class="hljs-attr">功能：默认显示指定文件的末尾10行的内容。</span></code></pre>
+
+<h5 id="13-2-显示文件最后n行内容"><a href="#13-2-显示文件最后n行内容" class="headerlink" title="13.2 显示文件最后n行内容"></a>13.2 显示文件最后n行内容</h5><pre><code class="hljs properties"><span class="hljs-comment"># tail  -n 12  /etc/httpd/conf/httpd.conf</span>
+
+<span class="hljs-attr">功能：参数-n设置显示指定行数；</span>
+
+          <span class="hljs-attr">本例会显示文件的末尾12行的内容。</span></code></pre>
+
+<h1 id="二、用户、组管理命令"><a href="#二、用户、组管理命令" class="headerlink" title="二、用户、组管理命令"></a>二、<strong>用户、组管理命令</strong></h1><ul>
+<li>Linux采用<strong>组</strong>来组织和管理用户</li>
+<li>在Linux中每个用户有唯一的用户标识符UID，该UID是一个无符号整数。</li>
+<li>同时每个用户也必须<strong>至少属于一个组</strong>，也有组标识符GID。</li>
+<li>其中UID与GID独立编号。</li>
+</ul>
+<h3 id="1-groupadd命令"><a href="#1-groupadd命令" class="headerlink" title="1. groupadd命令"></a>1. groupadd命令</h3><h5 id="1-1-创建组账户"><a href="#1-1-创建组账户" class="headerlink" title="1.1 创建组账户"></a>1.1 创建组账户</h5><pre><code class="hljs properties"><span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]# groupadd  mygroup1</span>
+
+<span class="hljs-attr">功能：创建一个新组mygroup1，其GID号为已存在GID号的下一个顺序编号。</span>
+
+<span class="hljs-attr">说明：创建一个组的同时会在/etc/group文件中为该组增加相应的一行，用来记录该组的名称、GID号及成员等信息。</span></code></pre>
+
+
+
+<h5 id="1-2-创建组账户并设置其GID号"><a href="#1-2-创建组账户并设置其GID号" class="headerlink" title="1.2 创建组账户并设置其GID号"></a>1.2 创建组账户并设置其GID号</h5><pre><code class="hljs properties"><span class="hljs-comment"># groupadd  -g 5000  mygroup2</span>
+
+<span class="hljs-attr">功能：创建一个新组mygroup2，并指定其GID号为5000，其中-g用来设置用户的主要组，每个用户都有一个主要组。</span></code></pre>
+
+
+
+<h3 id="2、useradd命令"><a href="#2、useradd命令" class="headerlink" title="2、useradd命令"></a>2、useradd命令</h3><h5 id="2-1-创建用户账号"><a href="#2-1-创建用户账号" class="headerlink" title="2.1 创建用户账号"></a>2.1 创建用户账号</h5><pre><code class="hljs properties"><span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]# useradd  user1</span>
+
+<span class="hljs-attr">功能：创建一个用户user1，同时在/etc/passwd文件和/etc/shadow文件增加一行，并自动为用户创建相应的主目录：/home/user1。</span>
+
+<span class="hljs-attr">说明：/etc/passwd文件记录了系统中每个用户的用户名、UID号、GID号、主目录、shell等信息。</span>
+
+<span class="hljs-attr">注意：用户的口令原来也存放在此文件中，现在为了保证安全采用了影子口令文件/etc/shadow来保存每个用户的口令。</span></code></pre>
+
+
+
+<h5 id="2-2-创建用户账号并设置相应属性值"><a href="#2-2-创建用户账号并设置相应属性值" class="headerlink" title="2.2 创建用户账号并设置相应属性值"></a>2.2 创建用户账号并设置相应属性值</h5><pre><code class="hljs properties"><span class="hljs-comment"># useradd  -u 600  -g mygroup1  -G mygroup2  -d  /home/student1  s1</span>
+
+<span class="hljs-attr">功能：创建用户s1，其中参数</span>
+
+<span class="hljs-attr">-u指定UID号为600；</span>
+
+<span class="hljs-attr">-g指定用户的主要组为mygroup1；</span>
+
+<span class="hljs-attr">-G指定用户的附加组为mygroup2，每个用户可以有多个附加组；</span>
+
+<span class="hljs-meta">-d</span> <span class="hljs-string">指定用户的主目录为/home/student1。</span></code></pre>
+
+<h3 id="3、userdel命令"><a href="#3、userdel命令" class="headerlink" title="3、userdel命令"></a>3、userdel命令</h3><h5 id="3-1-删除用户"><a href="#3-1-删除用户" class="headerlink" title="3.1 删除用户"></a>3.1 删除用户</h5><pre><code class="hljs properties"><span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]# userdel  user1</span>
+
+<span class="hljs-attr">功能：删除指定的用户user1。</span></code></pre>
+
+<h5 id="3-2-删除用户的同时删除其主目录"><a href="#3-2-删除用户的同时删除其主目录" class="headerlink" title="3.2 删除用户的同时删除其主目录"></a>3.2 删除用户的同时删除其主目录</h5><pre><code class="hljs properties"><span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]# userdel  -r  user2</span>
+
+<span class="hljs-attr">功能：删除指定的用户user2，同时删除其主目录。</span></code></pre>
+
+
+
+<h3 id="4、groupdel命令（删除指定的组）"><a href="#4、groupdel命令（删除指定的组）" class="headerlink" title="4、groupdel命令（删除指定的组）"></a>4、groupdel命令（删除指定的组）</h3><pre><code class="hljs properties"><span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]# groupdel mygroup2</span>
+
+<span class="hljs-attr">功能：删除指定的组</span>
+
+<span class="hljs-attr">注意：当某个组是某现有用户的主要组时，则不能被删除。</span></code></pre>
+
+
+
+<h3 id="5、passwd命令"><a href="#5、passwd命令" class="headerlink" title="5、passwd命令"></a>5、passwd命令</h3><h5 id="5-1-改变口令"><a href="#5-1-改变口令" class="headerlink" title="5.1 改变口令"></a>5.1 改变口令</h5><pre><code class="hljs properties"><span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]# passwd</span>
+
+<span class="hljs-attr">Changing</span> <span class="hljs-string">password for user user1.</span>
+
+<span class="hljs-attr">Changing</span> <span class="hljs-string">password for user1</span>
+
+<span class="hljs-meta">(current)</span> <span class="hljs-string">Unix password:</span>
+
+<span class="hljs-attr">New</span> <span class="hljs-string">Unix password:</span>
+
+<span class="hljs-attr">BAD</span> <span class="hljs-string">PASSWORD: it is too simplistic/systematic</span>
+
+<span class="hljs-attr">New</span> <span class="hljs-string">Unix password:</span>
+
+<span class="hljs-attr">BAD</span> <span class="hljs-string">PASSWORD: is too similar to the old one</span>
+
+<span class="hljs-attr">New</span> <span class="hljs-string">Unix password:</span>
+
+<span class="hljs-attr">Retype</span> <span class="hljs-string">new Unix password:</span>
+
+<span class="hljs-attr">passwd</span>: <span class="hljs-string">all authentication tokens updated successfully.</span>
+
+<span class="hljs-attr">功能：普通用户只可以修改自己的口令</span></code></pre>
+
+<h5 id="5-2-禁止用户登录"><a href="#5-2-禁止用户登录" class="headerlink" title="5.2 禁止用户登录"></a>5.2 禁止用户登录</h5><pre><code class="hljs properties"><span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]# passwd  -l  user1</span>
+
+<span class="hljs-attr">Locking</span> <span class="hljs-string">password for user user1.</span>
+
+<span class="hljs-attr">passwd</span>: <span class="hljs-string">Success</span>
+
+<span class="hljs-meta">功能：参数-l</span> <span class="hljs-string">可以给指定的用户user1加锁，即禁止该用户登录。</span></code></pre>
+
+
+
+<h5 id="5-3-恢复用户登录"><a href="#5-3-恢复用户登录" class="headerlink" title="5.3 恢复用户登录"></a>5.3 恢复用户登录</h5><pre><code class="hljs properties"><span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]# passwd  –u  user1</span>
+
+<span class="hljs-attr">Unlocking</span> <span class="hljs-string">password for user user1.</span>
+
+<span class="hljs-attr">passwd</span>: <span class="hljs-string">Success.</span>
+
+<span class="hljs-meta">功能：参数-u</span> <span class="hljs-string">可以给指定的用户user1解锁，即恢复该用户登录。</span></code></pre>
+
+
+
+<h5 id="5-4-删除用户口令"><a href="#5-4-删除用户口令" class="headerlink" title="5.4 删除用户口令"></a>5.4 删除用户口令</h5><pre><code class="hljs properties"> <span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]# passwd  -d  user1</span>
+
+<span class="hljs-attr">Removing</span> <span class="hljs-string">password for user user1.</span>
+
+<span class="hljs-attr">passwd</span>: <span class="hljs-string">Success</span>
+
+<span class="hljs-meta">功能：参数-d</span> <span class="hljs-string">可以删除指定的用户user1口令，即以user1登录时无需口令。</span></code></pre>
+
+<h3 id="6、usermod命令（修改用户的UID和组）"><a href="#6、usermod命令（修改用户的UID和组）" class="headerlink" title="6、usermod命令（修改用户的UID和组）"></a>6、usermod命令（修改用户的UID和组）</h3><pre><code class="hljs properties"><span class="hljs-comment"># usermod  -u  601  -g 501  s1</span>
+
+<span class="hljs-attr">功能：将（已存在的）用户s1的UID号修改为601、主要组修改为501。</span></code></pre>
+
+<h3 id="7、id命令（显示UID，GID）"><a href="#7、id命令（显示UID，GID）" class="headerlink" title="7、id命令（显示UID，GID）"></a>7、id命令（显示UID，GID）</h3><pre><code class="hljs properties"><span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]# id  user1</span>
+
+<span class="hljs-attr">uid</span>=<span class="hljs-string">501(user1) gid=501(user1) groups=501(user1)</span>
+
+<span class="hljs-attr">功能：显示用户的UID、GID及所属的组信息。</span></code></pre>
+
+<h1 id="三、文件属性操作命令"><a href="#三、文件属性操作命令" class="headerlink" title="三、文件属性操作命令"></a>三、文件属性操作命令</h1><h3 id="1、chown命令（改变文件的属主）"><a href="#1、chown命令（改变文件的属主）" class="headerlink" title="1、chown命令（改变文件的属主）"></a>1、chown命令（改变文件的属主）</h3><pre><code class="hljs properties"><span class="hljs-attr">（1）chown示例一——改变文件的属主</span>
+
+<span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]# chown  user1  hello.txt</span>
+
+<span class="hljs-attr">功能：将指定文件hello.txt的属主（所有者）改为user1。</span>
+
+<span class="hljs-attr">（2）chown示例二——递归改变文件的属主</span>
+
+<span class="hljs-comment"># chown  -R  user1  mydir</span>
+
+<span class="hljs-attr">功能：参数-R，表示递归，即可以深入到指定目录中的每一层，将所有子目录和文件的属主（所有者）改为指定的用户；本例中会将mydir目录中所有子目录和文件的属主设定为user1。</span></code></pre>
+
+
+
+<h3 id="2、chgrp命令（改变文件的属组）"><a href="#2、chgrp命令（改变文件的属组）" class="headerlink" title="2、chgrp命令（改变文件的属组）"></a>2、chgrp命令（改变文件的属组）</h3><pre><code class="hljs properties"><span class="hljs-attr">（1）chgrp示例一——改变文件的属组</span>
+
+<span class="hljs-comment"># chgrp  mygroup1  hello.txt</span>
+
+<span class="hljs-attr">功能：将指定文件hello.txt的属组改为mygroup1。</span>
+
+<span class="hljs-attr">（2）chgrp示例二——递归改变文件的属组</span>
+
+<span class="hljs-comment"># chgrp  -R  mygroup1  mydir</span>
+
+<span class="hljs-attr">功能：参数-R，表示递归，即可以深入到指定目录中的每一层，将所有子目录和文件的属组改为指定的组；本例中会将mydir目录中所有子目录和文件的属组设定为mygroup1。</span></code></pre>
+
+
+
+<h3 id="3、chmod命令（更改文件的属主权限）"><a href="#3、chmod命令（更改文件的属主权限）" class="headerlink" title="3、chmod命令（更改文件的属主权限）"></a>3、chmod命令（更改文件的属主权限）</h3><pre><code class="hljs properties"><span class="hljs-attr">（1）chmod示例一——字母方式</span>
+
+   <span class="hljs-attr">图中字母u针对属主、g针对属组、o针对其他用户、a针对所有用户；</span>
+
+    =表示赋予（设置）指定权限，要注意它会覆盖原权限，+表示在原有权限的基础上增加指定权限，-表示在原有权限的基础上去掉指定权限；
+
+    <span class="hljs-attr">r、w、x三种权限，既可以单独使用也可以组合使用</span>
+
+<span class="hljs-comment"># chmod  u+x  host.conf</span>
+
+<span class="hljs-attr">功能：为文件host.conf的属主增加执行权限。</span>
+
+<span class="hljs-comment"># chmod  g-w,o=x  host.conf</span>
+
+<span class="hljs-attr">功能：将文件host.conf的属组去掉写权限，同时将其他用户设置为只有执行权限，而文件属主的权限不变。</span>
+
+<span class="hljs-attr">（2）chmod示例二——数字方式</span>
+
+<span class="hljs-attr">chmod的数字使用方式，使用起来也是很方便的，关键是一个数制转换的问题。</span>
+
+<span class="hljs-attr">这种方式是先将每个权限位化成二进制数，其中如果某权限位是“-”则用0来表示，否则用1来表示；接着，将这9列权限分为三组（每三位一组），再将每组化成一个八进制数。</span>
+
+<span class="hljs-attr">例如，某文件有如下权限rwxrw-r--，则转换为二进制数为111110100，再化为八进制数则为764；反之，当看到八进制数764时也应该很快转化为相应权限。</span>
+
+<span class="hljs-comment"># chmod  764  host.conf</span>
+
+<span class="hljs-attr">功能：将文件host.conf的权限设置为：</span>
+
+<span class="hljs-attr">属主拥有全部权限；</span>
+
+<span class="hljs-attr">属组拥有读写权限；</span>
+
+<span class="hljs-attr">其他用户拥有只读权限。</span></code></pre>
+
+
+
+<h1 id="四、i节点及其相关命令"><a href="#四、i节点及其相关命令" class="headerlink" title="四、i节点及其相关命令"></a>四、i节点及其相关命令</h1><h3 id="1、ln命令（建立硬连接）"><a href="#1、ln命令（建立硬连接）" class="headerlink" title="1、ln命令（建立硬连接）"></a>1、ln命令（建立硬连接）</h3><pre><code class="hljs properties"><span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]# ln  myfile  myfile.hlink</span>
+
+<span class="hljs-attr">功能：为文件myfile创建名为myfile.hlink的硬连接。</span>
+
+<span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]# ls  -il</span>
+
+<span class="hljs-attr">180590</span> <span class="hljs-string">-rw-rw-r--  2  user1 user1   12 Aug 17 12:14 myfile</span>
+
+<span class="hljs-attr">180590</span> <span class="hljs-string">-rw-rw-r--  2  user1 user1   12 Aug 17 12:14 myfile.hlink</span>
+
+<span class="hljs-meta">说明：通过ls</span>  <span class="hljs-string">–il 命令可以看出myfile与myfile.hlink的i节点号（最左面的数）是一样的，即硬连接与原文件共用同一个i节点，请注意两个文件的连接数（位于长格式列表中权限位与属主之间的数）都增加了1变成2了。</span></code></pre>
+
+
+
+<h3 id="2、建立符号连接"><a href="#2、建立符号连接" class="headerlink" title="2、建立符号连接"></a>2、建立符号连接</h3><pre><code class="hljs properties"><span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]# ln  -s  myfile  myfile.slink</span>
+
+<span class="hljs-attr">功能：为文件myfile创建名为myfile.slink的符号连接。</span>
+
+<span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]# ls  -li</span>
+
+<span class="hljs-attr">180590</span> <span class="hljs-string">-rw-rw-r--    2  user1 user1   12 Aug 17 12:14 myfile</span>
+
+<span class="hljs-attr">180590</span> <span class="hljs-string">-rw-rw-r--    2  user1 user1   12 Aug 17 12:14 myfile.hlink</span>
+
+<span class="hljs-attr">180606</span> <span class="hljs-string">lrwxrwxrwx  1  user1 user1    6 Aug 21 06:21 myfile.slink -&gt; myfile</span>
+
+<span class="hljs-attr">说明：硬链接若一个inode号对应多个文件名时，则称之为硬链接。硬链接具有以下几个特性：文件拥有相同的inode号和数据块；只能对已存在的文件创建硬链接；不能跨越文件系统创建硬链接；不能堆目录创建硬链接；删除一个硬链接文件不影响其他相同inode号的文件。软链接在Linux中，若文件的数据块中存放的内容是另一文件的路径名，则称之为软连接。软链接类似于Windows系统下的快捷方式。软连接有自己的inode号和用户数据块。为此，软链接避免了硬链接的诸多限制，软链接主要具有以下特点：软链接有自己的文件属性及权限等；可以对不存在的文件或目录创建软链接；软链接可以跨越文件系统创建；删除软链接时不会影响被指向的文件；若原文件被删除时，相关软链接文件被称为死链接（当该路路劲的文件重新创建时，死链接可以恢复正常）。</span></code></pre>
+
+
+
+<h1 id="五、查找命令"><a href="#五、查找命令" class="headerlink" title="五、查找命令"></a>五、查找命令</h1><h3 id="1、which命令-显示命令的绝对路径"><a href="#1、which命令-显示命令的绝对路径" class="headerlink" title="1、which命令(显示命令的绝对路径)"></a>1、which命令(显示命令的绝对路径)</h3><pre><code class="hljs properties"><span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]# which cp</span>
+
+<span class="hljs-attr">/bin/cp</span>
+
+<span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]# which updatedb</span>
+
+<span class="hljs-attr">/usr/bin/updatedb</span>
+
+<span class="hljs-attr">功能：显示命令的绝对路径。</span>
+
+<span class="hljs-attr">注意：该命令只能在命令搜索路径指定的目录中去查找命令或程序。</span></code></pre>
+
+<h3 id="2、whereis命令（查询指定命令所在目录以及帮助文档所在目录）"><a href="#2、whereis命令（查询指定命令所在目录以及帮助文档所在目录）" class="headerlink" title="2、whereis命令（查询指定命令所在目录以及帮助文档所在目录）"></a>2、whereis命令（查询指定命令所在目录以及帮助文档所在目录）</h3><pre><code class="hljs properties"><span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]# whereis ln</span>
+
+<span class="hljs-attr">ln</span>: <span class="hljs-string">/bin/ln /usr/share/man/man1/ln.1.gz /usr/share/man/man1p/ln.1p.gz</span>
+
+<span class="hljs-attr">功能：查询指定命令所在目录以及帮助文档所在目录。</span></code></pre>
+
+
+
+<h3 id="3、find命令（按照文件的名称，大小，类型，修改时间，权限查找文件）"><a href="#3、find命令（按照文件的名称，大小，类型，修改时间，权限查找文件）" class="headerlink" title="3、find命令（按照文件的名称，大小，类型，修改时间，权限查找文件）"></a>3、find命令（按照文件的名称，大小，类型，修改时间，权限查找文件）</h3><pre><code class="hljs properties"><span class="hljs-attr">（1）find示例一——按文件名查找</span>
+
+<span class="hljs-comment"># find  /  -name  &quot;dhcpd*&quot;</span>
+
+<span class="hljs-attr">功能：参数-name指明按文件名进行查找，即从/目录开始查找以dhcpd开头的所有文件。</span>
+
+<span class="hljs-attr">（2）find示例二——按文件大小查找</span>
+
+<span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]# find  /etc  -size  8</span>
+
+<span class="hljs-attr">功能：从/etc下开始查找大小为8块的文件，此处默认512字节为1块。若认为块大小为1k，则应写为8k。</span>
+
+   <span class="hljs-attr">其它可以使用的单位有c（字节）、w（双字节）、M（兆字节）和G（吉字节）。</span>
+
+<span class="hljs-attr">（3）find示例三——按文件类型查找</span>
+
+<span class="hljs-comment"># find  /var  -type d  -print</span>
+
+<span class="hljs-attr">功能：从/var目录下开始查找类型为目录的文件，其中参数-print是显示到屏幕上的意思，经常省略。</span>
+
+<span class="hljs-attr">（4）find示例四——按文件的修改时间查找</span>
+
+<span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]# find  .  -cmin -5</span>
+
+<span class="hljs-attr">功能：从当前目录下查找5分钟之内修改过的文件。</span>
+
+   <span class="hljs-meta">如果把“-5”改为</span> <span class="hljs-string">“+5”，则表示查找5分钟以前修改过的文件。不带“+”或“-”，则认为整5分钟。</span>
+
+  <span class="hljs-attr">如果把时间单位改为天，则使用参数“-ctime”，请看示例：</span>
+
+<span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]# find  .  -ctime -5</span>
+
+<span class="hljs-attr">（5）find示例五——按文件的权限查找</span>
+
+<span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]#find  mytmp  -perm  755</span>
+
+<span class="hljs-attr">功能：查找mytmp目录下的权限恰为755的文件。</span>
+
+<span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]#find  mytmp  -perm  +755</span>
+
+<span class="hljs-attr">功能：查找mytmp目录下的满足755中任何一种权限的文件，即符合任何一个指定的权限位即可。</span>
+
+<span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]#find  mytmp  -perm  -755</span>
+
+<span class="hljs-attr">功能：查找mytmp目录下的权限至少满足755的文件，即指定的所有权限位必须符合才算满足查询条件。</span></code></pre>
+
+
+
+<h1 id="六、文件内容操作命令"><a href="#六、文件内容操作命令" class="headerlink" title="六、文件内容操作命令"></a>六、文件内容操作命令</h1><h3 id="1、grep命令-在指定的文件查找特定的字符串"><a href="#1、grep命令-在指定的文件查找特定的字符串" class="headerlink" title="1、grep命令(在指定的文件查找特定的字符串)"></a>1、grep命令(在指定的文件查找特定的字符串)</h3><pre><code class="hljs properties"><span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]# grep  &quot;bind&quot;  host.conf</span>
+
+<span class="hljs-attr">功能：在文件host.conf中查找包含字符串“bind”行。</span>
+
+<span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]# grep  &quot;network&quot;  /etc/*.conf</span>
+
+<span class="hljs-attr">功能：利用通配符可在多个文件中查找包含特定的字符串的行。本例会在/etc下扩展名为.conf文件中查找包含字符串“network”的行。</span>
+
+<span class="hljs-attr">（2）grep示例二——查找不包含指定字符串的行</span>
+
+<span class="hljs-comment"># grep  -v  &quot;network&quot;  /etc/nsswitch.conf</span>
+
+<span class="hljs-attr">功能：查找/etc/nsswitch.conf文件中不包含字符串“network”的行</span></code></pre>
+
+
+
+<h3 id="2、wc命令（字数统计）"><a href="#2、wc命令（字数统计）" class="headerlink" title="2、wc命令（字数统计）"></a>2、wc命令（字数统计）</h3><pre><code class="hljs properties"><span class="hljs-attr">（1）wc示例一——统计指定文件的行数、单词数和字符数</span>
+
+<span class="hljs-meta">[user1@server2</span> <span class="hljs-string">~]# wc  /etc/nsswitch.conf</span>
+
+  <span class="hljs-attr">63</span>  <span class="hljs-string">272  1718  /etc/nsswitch.conf</span>
+
+<span class="hljs-attr">功能：统计出文件/etc/nsswitch.conf共有63行、272个单词、1718个字符。</span>
+
+<span class="hljs-attr">（2）wc示例二——参数使用</span>
+
+<span class="hljs-comment"># wc  -l  /etc/nsswitch.conf</span>
+
+<span class="hljs-attr">63</span>  <span class="hljs-string">/etc/nsswitch.conf</span>
+
+<span class="hljs-attr">功能：参数-l的功能可统计出指定文件的行数。另外，利用参数-w统计单词，利用-c统计字符数。</span></code></pre>
+
+
+
+<h3 id="3、sort命令-以行为单位按序输出"><a href="#3、sort命令-以行为单位按序输出" class="headerlink" title="3、sort命令(以行为单位按序输出)"></a>3、sort命令(以行为单位按序输出)</h3><pre><code class="hljs properties"><span class="hljs-attr">（1）sort示例一——按正序输出</span>
+
+<span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]# sort  mytest</span>
+
+<span class="hljs-attr">功能：将指定文件以行为单位按正序输出。</span>
+
+<span class="hljs-attr">（2）sort示例二——按逆序输出</span>
+
+<span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]# sort  -r  mytest</span>
+
+<span class="hljs-attr">功能：将指定文件以行为单位按逆序输出。</span></code></pre>
+
+
+
+<h3 id="4、diff命令-比较不同"><a href="#4、diff命令-比较不同" class="headerlink" title="4、diff命令(比较不同)"></a>4、diff命令(比较不同)</h3><pre><code class="hljs properties"><span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]# diff  test  mytest</span>
+
+<span class="hljs-attr">功能：比较文件test与mytest是否相同，将不同之处输出到屏幕上。</span></code></pre>
+
+
+
+<h3 id="5、cut命令-按特定的分隔符提取指定的字段"><a href="#5、cut命令-按特定的分隔符提取指定的字段" class="headerlink" title="5、cut命令(按特定的分隔符提取指定的字段)"></a>5、cut命令(<strong>按特定的分隔符提取指定的字段</strong>)</h3><pre><code class="hljs properties"> <span class="hljs-attr">cut命令是一个文本提取工具，它以行为单位，将每行看作一条记录，而字段之间的分隔符可以灵活地定义。</span>
+
+<span class="hljs-attr">（1）cut示例一——按特定的分隔符提取指定的字段</span>
+
+<span class="hljs-meta">[user1@server2</span> <span class="hljs-string">~]# cut  -d:  -f1  /etc/passwd</span>
+
+<span class="hljs-attr">功能：参数-d用来定义字段之间的分隔符，参数-f指定提取第几个字段；本例为提取/etc/passwd文件中以“：”为分隔符的第1个字段。</span></code></pre>
+
+
+
+<h1 id="七、压缩与打包命令"><a href="#七、压缩与打包命令" class="headerlink" title="七、压缩与打包命令"></a>七、压缩与打包命令</h1><h3 id="1-tar命令-打包-备份"><a href="#1-tar命令-打包-备份" class="headerlink" title="1. tar命令(打包/备份)"></a>1. tar命令(打包/备份)</h3><pre><code class="hljs properties"> <span class="hljs-attr">tar命令是经典的备份/还原命令，几乎所有最新的软件包都是通过tar包发布的。</span>
+
+<span class="hljs-attr">（1）tar命令示例一——打包（备份）</span>
+
+<span class="hljs-meta">[user1@server2</span> <span class="hljs-string">~]# tar  -cvf  myetc.tar  /etc</span>
+
+<span class="hljs-meta">功能：</span>  <span class="hljs-string">参数-c的功能是打包（创建），</span>
+
+           <span class="hljs-attr">参数-v是显示处理过程，</span>
+
+           <span class="hljs-attr">参数-f是用来指定文档名；</span>
+
+<span class="hljs-attr">本例的功能是：将目录/etc打包为一个名为myetc.tar的文档。</span>
+
+<span class="hljs-attr">（2）tar命令示例二——打包（备份）并压缩</span>
+
+<span class="hljs-comment"># tar  -zcvf  myetc.tar.gz  /etc</span>
+
+<span class="hljs-attr">功能：将目录/etc打包并压缩为一个名为myetc.tar.gz的文档。</span>
+
+<span class="hljs-attr">说明：其中参数-z是调用gzip命令来压缩，扩展名为gz，</span>
+
+<span class="hljs-attr">参数-Z是调用compress命令来压缩，扩展名为Z，</span>
+
+<span class="hljs-attr">参数-j是调用bzip2命令来压缩，扩展名为bz2。</span></code></pre>
+
+
+
+<h1 id="八、网卡配置命令"><a href="#八、网卡配置命令" class="headerlink" title="八、网卡配置命令"></a>八、网卡配置命令</h1><h3 id="1-ipconfig"><a href="#1-ipconfig" class="headerlink" title="1. ipconfig"></a>1. ipconfig</h3><pre><code class="hljs properties"><span class="hljs-attr">（1）ifconfig命令示例一——显示接口（网卡）配置参数</span>
+<span class="hljs-meta">[root@server2</span> <span class="hljs-string">~]# ifconfig</span>
+
+<span class="hljs-attr">功能：显示网卡参数的配置情况，包括IP地址、子网掩码、广播地址等。</span>
+
+<span class="hljs-attr">（2）ifconfig命令示例二——设置接口（网卡）配置参数</span>
+<span class="hljs-comment"># ifconfig  eth0  10.22.1.103  netmask  255.255.255.0</span>
+
+<span class="hljs-attr">功能：设置网卡eth0的IP地址为10.22.1.103、掩码为255.255.255.0。</span>
+
+<span class="hljs-attr">说明：eth0是系统中第1块以太网卡的名称，eth1是系统中第2块以太网卡的名称，以此类推。lo是环回测试网卡的名称。</span>
+
+<span class="hljs-attr">（3）ifconfig命令示例三——禁用某块网卡</span>
+<span class="hljs-meta">[root@server2</span> <span class="hljs-string">~]# ifconfig  eth0  down</span>
+
+<span class="hljs-attr">功能：禁用网卡eth0。</span>
+
+<span class="hljs-attr">说明：此时再用不带参数的ifconfig命令是不能显示eth0的信息的，需要加上参数“-a”才可显示被禁用的网卡信息。</span>
+
+<span class="hljs-attr">（4）ifconfig命令示例四——激活某块网卡</span>
+<span class="hljs-meta">[root@server2</span> <span class="hljs-string">~]# ifconfig  eth0  up</span>
+
+<span class="hljs-attr">功能：激活网卡eth0。</span></code></pre>
+
+
+
+<h1 id="九、rpm命令（执行安装包）"><a href="#九、rpm命令（执行安装包）" class="headerlink" title="九、rpm命令（执行安装包）"></a>九、rpm命令（执行安装包）</h1><pre><code class="hljs properties"><span class="hljs-attr">（1）rpm命令示例一——查询系统中安装的软件包</span>
+<span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]# rpm -qa</span>
+
+<span class="hljs-attr">功能：查询系统中安装的软件包列表，其中参数-q的功能是“查询”，参数-a的功能是“所有的”。</span>
+
+<span class="hljs-attr">（2）rpm命令示例二——查询软件包中文件清单</span>
+<span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]#rpm  -ql  php</span>
+
+<span class="hljs-attr">功能：查询已安装的软件包php中的文件列表，其中参数-l的功能是“列出指定软件包中的文件”。</span>
+
+<span class="hljs-attr">（3）rpm命令示例三——卸载指定的软件包</span>
+<span class="hljs-meta">[root@yxy</span> <span class="hljs-string">~]# rpm  -e  php</span>
+
+<span class="hljs-attr">功能：卸载已安装的软件包php，参数-e的功能是“卸载”。</span>
+
+<span class="hljs-attr">说明：请注意执行上述命令时，采用的身份是不同的，普通用户只能执行查询操作。</span>
+
+<span class="hljs-attr">（4）rpm命令示例四——安装软件包</span>
+<span class="hljs-comment"># rpm  -ivh  php-4.3.9-3.1-i386.rpm</span>
+
+<span class="hljs-attr">功能：安装软件包php，</span>
+
+   <span class="hljs-attr">参数-i的功能是“安装”，</span>
+
+   <span class="hljs-attr">参数-v的功能是“显示处理过程”，</span>
+
+   <span class="hljs-attr">参数-h的功能是显示“#”来表示进度。</span>
+
+<span class="hljs-attr">（5）rpm命令示例五——强制安装软件包</span>
+<span class="hljs-comment"># rpm  -ivh  --force  php-4.3.9-3.1-i386.rpm</span>
+
+<span class="hljs-attr">功能：强制安装软件包php，参数--force表示强制的意思。</span>
+
+<span class="hljs-attr">说明：如果要安装的软件的版本比较低或该软件包在系统中已存在，系统会给出提示并拒绝安装，此时可以加上参数—force来进行强制安装。</span>
+
+<span class="hljs-attr">（6）rpm命令示例五——忽略依赖关系安装软件包</span>
+<span class="hljs-comment"># rpm  -ivh  --nodeps  php-4.3.9-3.1-i386.rpm</span>
+<span class="hljs-attr">功能：安装软件包php时忽略与其它软件包的依赖关系，参数--nodeps表示忽略依赖关系。</span>
+
+<span class="hljs-attr">说明：在安装或卸载软件时经常会遇到提示“该软件包与某某软件包存在依赖关系”，只有加上参数--nodeps忽略掉依赖关系才能进行安装或卸载。</span>
+
+<span class="hljs-attr">（7）卸载</span>
+
+             <span class="hljs-meta">首先通过</span>  <span class="hljs-string">rpm -q &lt;关键字&gt; 可以查询到rpm包的名字</span>
+
+<span class="hljs-meta">然后</span> <span class="hljs-string">调用 rpm -e &lt;包的名字&gt; 删除特定rpm包</span>
+
+<span class="hljs-meta">如果遇到依赖，无法删除，使用</span> <span class="hljs-string">rpm -e --nodeps &lt;包的名字&gt; 不检查依赖，直接删除rpm包</span></code></pre>
+
+
+
+<h1 id="十、其他安装方式"><a href="#十、其他安装方式" class="headerlink" title="十、其他安装方式"></a>十、其他安装方式</h1><pre><code class="hljs properties"><span class="hljs-attr">yum安装</span>
+       <span class="hljs-attr">yum</span> <span class="hljs-string">install 软件名字</span>
+       <span class="hljs-attr">yum</span> <span class="hljs-string">install yum-fastestmirror</span>
+       <span class="hljs-attr">yum</span> <span class="hljs-string">remove</span>
+       
+       
+<span class="hljs-attr">源码安装</span>
+<span class="hljs-attr">./configure</span>
+            <span class="hljs-attr">make</span>
+            <span class="hljs-attr">make</span> <span class="hljs-string">install</span>
+            <span class="hljs-attr">make</span> <span class="hljs-string">clean与make distclean</span></code></pre>
+
+
+
+<h1 id="十一、查看进程命令"><a href="#十一、查看进程命令" class="headerlink" title="十一、查看进程命令"></a>十一、查看进程命令</h1><h3 id="1-ps命令（查看进程）"><a href="#1-ps命令（查看进程）" class="headerlink" title="1. ps命令（查看进程）"></a>1. ps命令（查看进程）</h3><pre><code class="hljs properties"><span class="hljs-attr">（1）ps命令示例一——不带参数</span>
+
+<span class="hljs-meta">[user1@server2</span> <span class="hljs-string">~]# ps</span>
+
+<span class="hljs-attr">功能：查询在当前控制台上运行的进程。</span>
+
+<span class="hljs-attr">（2）ps命令示例二——查看所有进程</span>
+
+<span class="hljs-meta">[user1@server2</span> <span class="hljs-string">~]# ps  -aux</span>
+
+<span class="hljs-attr">功能：查询系统中所有运行的进程，包括后台进程，其中参数a是所有进程，参数x包括不占用控制台的进程，参数u显示用户。</span>
+
+<span class="hljs-attr">（3）ps命令示例三——查看所有进程</span>
+
+<span class="hljs-meta">[user1@server2</span> <span class="hljs-string">~]# ps  -ef</span>
+
+<span class="hljs-attr">功能：查询系统中所有运行的进程，包括后台进程，而且可以显示出每个进程的父进程号。</span></code></pre>
+
+<h3 id="2-pstree命令（树状格式显示进程）"><a href="#2-pstree命令（树状格式显示进程）" class="headerlink" title="2. pstree命令（树状格式显示进程）"></a>2. pstree命令（树状格式显示进程）</h3><pre><code class="hljs properties"><span class="hljs-attr">（1）pstree命令示例一——树状格式显示进程列表</span>
+
+<span class="hljs-meta">[user1@server2</span> <span class="hljs-string">~]# pstree</span>
+
+<span class="hljs-attr">功能：以树状格式显示系统的进程列表。</span>
+
+<span class="hljs-attr">（2）pstree命令示例二——带进程号的树状格式显示进程列表</span>
+
+<span class="hljs-meta">[user1@server2</span> <span class="hljs-string">~]# pstree  -p</span>
+
+<span class="hljs-attr">功能：以树状格式显示系统的进程列表，并标识出每个进程的进程号</span></code></pre>
+
+<h3 id="3-top命令-动态显示进程"><a href="#3-top命令-动态显示进程" class="headerlink" title="3. top命令(动态显示进程)"></a>3. top命令(动态显示进程)</h3><pre><code class="hljs properties"><span class="hljs-meta">[user1@server2</span> <span class="hljs-string">~]# top</span>
+
+<span class="hljs-attr">功能：动态地显示系统中的进程。</span></code></pre>
+
+<h3 id="4-kill命令（杀死进程）"><a href="#4-kill命令（杀死进程）" class="headerlink" title="4. kill命令（杀死进程）"></a>4. kill命令（杀死进程）</h3><pre><code class="hljs properties"><span class="hljs-attr">（1）kill命令示例一——杀掉指定进程</span>
+
+<span class="hljs-meta">[user1@server2</span> <span class="hljs-string">~]# kill  3029</span>
+
+<span class="hljs-attr">功能：kill命令可以杀掉一个进程，当然普通用户只能杀掉自己的进程。</span>
+
+<span class="hljs-attr">说明：上述命令中3029是进程号；一般在执行kill命令之前，先用ps或pstree来查询一下将要被杀掉的进程的进程号。</span>
+
+<span class="hljs-attr">（2）kill命令示例二——强制杀掉指定进程</span>
+
+<span class="hljs-meta">[user1@server2</span> <span class="hljs-string">~]# kill  -9  3029</span>
+
+<span class="hljs-attr">功能：强制终止3029号进程的运行，其中参数-9代表强制的意思。</span>
+
+<span class="hljs-attr">说明：实际上kill命令是向该进程发送信号，该进程接到信号后决定是否停止运行，有些守护进程必须要收到参数9才终止运行。</span></code></pre>
+
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Linux/">Linux</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/">基本命令</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/10/15/Springboot/">
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '#post-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "Linux命令&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+  
+  
+    <script>
+      !function (e, t, a) {
+        function r() {
+          for (var e = 0; e < s.length; e++) s[e].alpha <= 0 ? (t.body.removeChild(s[e].el), s.splice(e, 1)) : (s[e].y--, s[e].scale += .004, s[e].alpha -= .013, s[e].el.style.cssText = "left:" + s[e].x + "px;top:" + s[e].y + "px;opacity:" + s[e].alpha + ";transform:scale(" + s[e].scale + "," + s[e].scale + ") rotate(45deg);background:" + s[e].color + ";z-index:99999");
+          requestAnimationFrame(r)
+        }
+
+        function n() {
+          var t = "function" == typeof e.onclick && e.onclick;
+          e.onclick = function (e) {
+            t && t(), o(e)
+          }
+        }
+
+        function o(e) {
+          var a = t.createElement("div");
+          a.className = "heart", s.push({
+            el: a,
+            x: e.clientX - 5,
+            y: e.clientY - 5,
+            scale: 1,
+            alpha: 1,
+            color: c()
+          }), t.body.appendChild(a)
+        }
+
+        function i(e) {
+          var a = t.createElement("style");
+          a.type = "text/css";
+          try {
+            a.appendChild(t.createTextNode(e))
+          } catch (t) {
+            a.styleSheet.cssText = e
+          }
+          t.getElementsByTagName("head")[0].appendChild(a)
+        }
+
+        function c() {
+          return "rgb(" + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + ")"
+        }
+
+        var s = [];
+        e.requestAnimationFrame = e.requestAnimationFrame || e.webkitRequestAnimationFrame || e.mozRequestAnimationFrame || e.oRequestAnimationFrame || e.msRequestAnimationFrame || function (e) {
+          setTimeout(e, 1e3 / 60)
+        }, i(".heart{width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: fixed;}.heart:after{top: -5px;}.heart:before{left: -5px;}"), n(), r()
+      }(window, document);
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+</body>
+</html>
