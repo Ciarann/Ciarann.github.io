@@ -1,0 +1,852 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  <title>redis笔记 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    
+  
+
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_pf9vaxs7x7b.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Ciarann</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner intro-2" id="background" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container page-header text-center fade-in-up">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-11-19 22:46" pubdate>
+        November 19, 2020 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.5k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      19
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto" id="post">
+            <!-- SEO header -->
+            <h1 style="display: none">redis笔记</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：November 23, 2020 am
+                
+              </p>
+            
+            <div class="markdown-body" id="post-body">
+              <h1 id="Redis学习笔记"><a href="#Redis学习笔记" class="headerlink" title="Redis学习笔记"></a>Redis学习笔记</h1><h2 id="一、Redis介绍"><a href="#一、Redis介绍" class="headerlink" title="一、Redis介绍"></a>一、Redis介绍</h2><h3 id="1-1-引言"><a href="#1-1-引言" class="headerlink" title="1.1 引言"></a>1.1 引言</h3><ol>
+<li>由于用户量增大，请求数量也随之增大，数据库压力过大。</li>
+<li>多台服务器之间，数据不同步。</li>
+<li>多台服务器之间的锁，已经不存在互斥性了。</li>
+</ol>
+<p><img src="/redisImage/1.png" srcset="/img/loading.gif"></p>
+<h3 id="1-2-NoSQL"><a href="#1-2-NoSQL" class="headerlink" title="1.2 NoSQL"></a>1.2 NoSQL</h3><p>Redis就是一款NoSql<br>NoSQL -&gt; 非关系型数据库 -&gt; Not Only SQL</p>
+<ol>
+<li>key-value: Redis…</li>
+<li>文档型：MongoDB，ElasticSearch,solr…</li>
+<li>面向列：Hbase…</li>
+<li>图形化：Neo4j…<br>NoSQL只是一种概念，泛指非关系型数据库，和关系型数据库做一个区分。</li>
+</ol>
+<h2 id="二、Redis安装"><a href="#二、Redis安装" class="headerlink" title="二、Redis安装"></a>二、Redis安装</h2><h2 id="三、redis常用命令"><a href="#三、redis常用命令" class="headerlink" title="三、redis常用命令"></a>三、redis常用命令</h2><h3 id="3-1-Redis存储数据的结构"><a href="#3-1-Redis存储数据的结构" class="headerlink" title="3.1 Redis存储数据的结构"></a>3.1 Redis存储数据的结构</h3><p><strong>常用的5种数据结构:</strong> </p>
+<ul>
+<li><p>key-string：一个key对于一个值</p>
+</li>
+<li><p>key-hash：一个key对应一个Map</p>
+</li>
+<li><p>key-list：一个key对应一个列表</p>
+</li>
+<li><p>key-set：一个key对应一个集合</p>
+</li>
+<li><p>key-zset：一个key对应一个有序的集合</p>
+</li>
+</ul>
+<p>另外三种数据结构</p>
+<ul>
+<li>HyperLogLog：计算近似值</li>
+<li>GEO：地理位置</li>
+<li>BIT：位图，一般存储的也是一个字符串，存储的是一个byte[]</li>
+</ul>
+<p><img src="/redisImage/2.png" srcset="/img/loading.gif"></p>
+<ul>
+<li>key-string：最常用，一般用于存储一个值</li>
+<li>key-hash：存储一个对象数据</li>
+<li>key-list：使用list结构实现栈和队列结构</li>
+<li>key-set：交集，差集和并集的操作</li>
+<li>key-zset：排行榜，积分存储等操作</li>
+</ul>
+<h3 id="3-2-string常用命令"><a href="#3-2-string常用命令" class="headerlink" title="3.2 string常用命令"></a>3.2 string常用命令</h3><pre><code class="hljs yml"><span class="hljs-comment"># 1.添加值</span>
+<span class="hljs-string">set</span> <span class="hljs-string">key</span> <span class="hljs-string">value</span>
+
+<span class="hljs-comment"># 2.取值</span>
+<span class="hljs-string">get</span> <span class="hljs-string">key</span>
+
+<span class="hljs-comment"># 3.批量操作</span>
+<span class="hljs-string">mset</span> <span class="hljs-string">key</span> <span class="hljs-string">value</span> [<span class="hljs-string">key</span> <span class="hljs-string">value</span>]
+<span class="hljs-string">mget</span> <span class="hljs-string">key</span> [<span class="hljs-string">key</span> <span class="hljs-string">...</span>]
+
+<span class="hljs-comment"># 4.自增命令</span>
+<span class="hljs-string">incr</span> <span class="hljs-string">key</span>
+
+<span class="hljs-comment"># 5.自减命令</span>
+<span class="hljs-string">decr</span> <span class="hljs-string">key</span>
+
+<span class="hljs-comment"># 6.自增自减指定数量</span>
+<span class="hljs-string">incrby</span> <span class="hljs-string">key</span> <span class="hljs-string">increment</span>
+<span class="hljs-string">decrby</span> <span class="hljs-string">key</span> <span class="hljs-string">increment</span>
+
+<span class="hljs-comment"># 7.设置值的同时设置生存时间(每次向redis中添加数据时，尽量都设置生存时间)</span>
+<span class="hljs-string">setex</span> <span class="hljs-string">key</span> <span class="hljs-string">second</span> <span class="hljs-string">value</span>
+
+<span class="hljs-comment"># 8.设置值，如果当前key不存在的话（如果这个key存在，什么事都不做，如果这个key不存在，和set命令一样）</span>
+<span class="hljs-string">setnx</span> <span class="hljs-string">key</span> <span class="hljs-string">value</span>
+
+<span class="hljs-comment"># 9.在key对应的value后，追加内容</span>
+<span class="hljs-string">append</span> <span class="hljs-string">key</span> <span class="hljs-string">value</span>
+
+<span class="hljs-comment"># 10.查看value字符串的长度</span>
+<span class="hljs-string">strlen</span> <span class="hljs-string">key</span></code></pre>
+
+
+
+<h3 id="3-3-hash常用命令"><a href="#3-3-hash常用命令" class="headerlink" title="3.3 hash常用命令"></a>3.3 hash常用命令</h3><pre><code class="hljs yml"><span class="hljs-comment"># 1.存储数据</span>
+<span class="hljs-string">hset</span> <span class="hljs-string">key</span> <span class="hljs-string">field</span> <span class="hljs-string">value</span>
+
+<span class="hljs-comment"># 2.获取数据</span>
+<span class="hljs-string">hget</span> <span class="hljs-string">key</span> <span class="hljs-string">field</span>
+
+<span class="hljs-comment"># 3.批量操作</span>
+<span class="hljs-string">hmset</span> <span class="hljs-string">key</span> <span class="hljs-string">field</span> <span class="hljs-string">value</span> [<span class="hljs-string">field</span> <span class="hljs-string">value</span>]
+<span class="hljs-string">hmget</span> <span class="hljs-string">key</span> <span class="hljs-string">field</span> [<span class="hljs-string">field</span> <span class="hljs-string">...</span>]
+
+<span class="hljs-comment"># 4.自增（指定）</span>
+<span class="hljs-string">hincrby</span> <span class="hljs-string">key</span> <span class="hljs-string">field</span> <span class="hljs-string">increment</span> 
+
+<span class="hljs-comment"># 5.设置值，如果当前key不存在的话（如果这个key存在，什么事都不做，如果这个key不存在，和set命令一样）</span>
+<span class="hljs-string">hsetnx</span> <span class="hljs-string">key</span> <span class="hljs-string">field</span> <span class="hljs-string">value</span>
+
+<span class="hljs-comment"># 6.检查field是否存在</span>
+<span class="hljs-string">hexists</span> <span class="hljs-string">key</span> <span class="hljs-string">field</span>
+
+<span class="hljs-comment"># 7.删除key对应的某一个field,可以删除多个</span>
+<span class="hljs-string">hdel</span> <span class="hljs-string">key</span> <span class="hljs-string">field</span> 
+
+<span class="hljs-comment"># 8.获取当前hash结构中的全部field和value</span>
+<span class="hljs-string">hgetall</span> <span class="hljs-string">key</span>
+
+<span class="hljs-comment"># 9.获取当前hash结构中的全部field</span>
+<span class="hljs-string">hkeys</span> <span class="hljs-string">key</span>
+
+<span class="hljs-comment"># 10.获取当前hash结构中的全部value</span>
+<span class="hljs-string">hvals</span> <span class="hljs-string">key</span>
+
+<span class="hljs-comment"># 11.获取当前hash结构中field的数量</span>
+<span class="hljs-string">hlen</span> <span class="hljs-string">key</span></code></pre>
+
+
+
+
+
+<h3 id="3-4-list常用命令"><a href="#3-4-list常用命令" class="headerlink" title="3.4 list常用命令"></a>3.4 list常用命令</h3><pre><code class="hljs yml"><span class="hljs-comment"># 1.存储数据</span>
+<span class="hljs-string">lpush</span> <span class="hljs-string">key</span> <span class="hljs-string">value</span> [<span class="hljs-string">value...</span>]
+<span class="hljs-string">rpush</span> <span class="hljs-string">key</span> <span class="hljs-string">value</span> [<span class="hljs-string">value...</span>]
+
+<span class="hljs-comment"># 2.存储数据（如果key不存在，什么事都不做，如果key存在，但是不是list机构，什么都不做）</span>
+<span class="hljs-string">lpushx</span> <span class="hljs-string">key</span> <span class="hljs-string">value</span>
+<span class="hljs-string">rpushx</span> <span class="hljs-string">key</span> <span class="hljs-string">value</span>
+
+<span class="hljs-comment"># 3.修改数据（修改指定索引位置的值，如果index超出整个列表的长度会失败）</span>
+<span class="hljs-string">lset</span> <span class="hljs-string">key</span> <span class="hljs-string">index</span> <span class="hljs-string">value</span>
+
+<span class="hljs-comment"># 4.获取数据（弹栈）</span>
+<span class="hljs-string">lpop</span> <span class="hljs-string">key</span>
+<span class="hljs-string">rpop</span> <span class="hljs-string">key</span>
+
+<span class="hljs-comment"># 5.获取指定索引范围的数据（start从0开始，stop输入-1，代表最后一个，-2代表倒数第二部）</span>
+<span class="hljs-string">lrange</span> <span class="hljs-string">key</span> <span class="hljs-string">start</span> <span class="hljs-string">stop</span>
+
+<span class="hljs-comment"># 6.获取指定索引位置的数据</span>
+<span class="hljs-string">lindex</span> <span class="hljs-string">key</span> <span class="hljs-string">index</span>
+
+<span class="hljs-comment"># 7.获取整个列表的长度</span>
+<span class="hljs-string">llen</span> <span class="hljs-string">key</span>
+
+<span class="hljs-comment"># 8.删除列表中的数据（他是删除当前列表中的count个value值，count&gt;0从左侧向右侧删除，count&lt;0从右侧向</span>
+<span class="hljs-string">左侧删除）,count=0,删除列表全部的value</span>
+<span class="hljs-string">lrem</span> <span class="hljs-string">key</span> <span class="hljs-string">count</span> <span class="hljs-string">value</span>
+
+<span class="hljs-comment"># 9.保留列表中的数据（保留指定范围内的数据，超过整个索引范围被移除掉）</span>
+<span class="hljs-string">ltrim</span> <span class="hljs-string">key</span> <span class="hljs-string">start</span> <span class="hljs-string">stop</span>
+
+<span class="hljs-comment"># 10.将一个列表中最后的一个数据，插入到另外一个列表的头部位置</span>
+<span class="hljs-string">rpoplpush</span> <span class="hljs-string">list1</span> <span class="hljs-string">list2</span></code></pre>
+
+
+
+
+
+<h3 id="3-5-set常用命令"><a href="#3-5-set常用命令" class="headerlink" title="3.5 set常用命令"></a>3.5 set常用命令</h3><pre><code class="hljs yml"><span class="hljs-comment"># 1.存储数据</span>
+<span class="hljs-string">sadd</span> <span class="hljs-string">key</span> <span class="hljs-string">member</span> [<span class="hljs-string">member...</span>]
+
+<span class="hljs-comment"># 2.获取数据(全部)</span>
+<span class="hljs-string">smembers</span> <span class="hljs-string">key</span>
+
+<span class="hljs-comment"># 3.随机获取一个数据(获取的同时，移除数据, 随机)</span>
+<span class="hljs-string">spop</span> <span class="hljs-string">key</span> <span class="hljs-string">（count）</span> <span class="hljs-comment"># count代表弹出数据数量</span>
+
+<span class="hljs-comment"># 4.交集</span>
+<span class="hljs-string">sinter</span> <span class="hljs-string">set1</span> <span class="hljs-string">set2</span> <span class="hljs-string">...</span>
+
+<span class="hljs-comment"># 5.并集</span>
+<span class="hljs-string">sunion</span> <span class="hljs-string">set1</span> <span class="hljs-string">set2</span> <span class="hljs-string">...</span>
+
+<span class="hljs-comment"># 6.差集</span>
+<span class="hljs-string">sdiff</span> <span class="hljs-string">set1</span> <span class="hljs-string">set2</span> 
+
+<span class="hljs-comment"># 7.删除数据</span>
+<span class="hljs-string">srem</span> <span class="hljs-string">key</span> <span class="hljs-string">member</span> <span class="hljs-string">member...</span>
+
+<span class="hljs-comment"># 8.查看当前的set集合是否包含这个数</span>
+<span class="hljs-string">sismemeber</span> <span class="hljs-string">key</span> <span class="hljs-string">member</span></code></pre>
+
+
+
+
+
+<h3 id="3-6-zset常用命令"><a href="#3-6-zset常用命令" class="headerlink" title="3.6 zset常用命令"></a>3.6 zset常用命令</h3><pre><code class="hljs yml"><span class="hljs-comment"># 1.添加数据(score是数值， member不允许重复)</span>
+<span class="hljs-string">zadd</span> <span class="hljs-string">key</span> <span class="hljs-string">score</span> <span class="hljs-string">member</span> [<span class="hljs-string">score</span> <span class="hljs-string">member...</span>]
+
+<span class="hljs-comment"># 2.修改member分数(若不存在，则执行zadd命令,不是替换 是做加法)</span>
+<span class="hljs-string">zincrby</span> <span class="hljs-string">key</span> <span class="hljs-string">increment</span> <span class="hljs-string">member</span> 
+
+<span class="hljs-comment"># 3.查看指定的member分数</span>
+<span class="hljs-string">zscore</span> <span class="hljs-string">key</span> <span class="hljs-string">member</span>
+
+<span class="hljs-comment"># 4.获取zset中数据的数量</span>
+<span class="hljs-string">zcard</span> <span class="hljs-string">key</span>
+
+<span class="hljs-comment"># 5.根据score查询member数量(&lt;= &gt;=)</span>
+<span class="hljs-string">zcount</span> <span class="hljs-string">key</span> <span class="hljs-string">min</span> <span class="hljs-string">max</span> 
+
+<span class="hljs-comment"># 6.删除zset中的成员</span>
+<span class="hljs-string">zrem</span> <span class="hljs-string">key</span> <span class="hljs-string">member</span> [<span class="hljs-string">member...</span>]</code></pre>
+
+<hr>
+<pre><code class="hljs yml"><span class="hljs-comment"># 7.根据分数从小到大，获取指定范围内的数据</span>
+<span class="hljs-string">zrange</span> <span class="hljs-string">key</span> <span class="hljs-string">start</span> <span class="hljs-string">stop</span> [<span class="hljs-string">withscores</span>]
+
+<span class="hljs-comment"># 8.根据分数从大到小，获取指定范围内的数据</span>
+<span class="hljs-string">zrevrange</span> <span class="hljs-string">key</span> <span class="hljs-string">start</span> <span class="hljs-string">stop</span> [<span class="hljs-string">withscores</span>]
+
+<span class="hljs-comment"># 9.根据分数的范围来返回数据(withscores代表同时返回scores，添加limit，就和mysql中一样)</span>
+<span class="hljs-string">zrangebyscore</span> <span class="hljs-string">key</span> <span class="hljs-string">min</span> <span class="hljs-string">max</span> [<span class="hljs-string">withscores</span>] [<span class="hljs-string">limit</span> <span class="hljs-string">offset</span> <span class="hljs-string">count</span>]
+
+<span class="hljs-comment"># 10.根据分数的范围来返回数据(withscores代表同时返回scores，添加limit，就和mysql中一样)</span>
+<span class="hljs-string">zrangebyscore</span> <span class="hljs-string">key</span> <span class="hljs-string">max</span> <span class="hljs-string">min</span> [<span class="hljs-string">withscores</span>] [<span class="hljs-string">limit</span> <span class="hljs-string">offset</span> <span class="hljs-string">count</span>]</code></pre>
+
+
+
+
+
+<h3 id="3-7-key常用命令"><a href="#3-7-key常用命令" class="headerlink" title="3.7 key常用命令"></a>3.7 key常用命令</h3><pre><code class="hljs yml"><span class="hljs-comment"># 1.查看Redis中的全部的key(pattern: *, xxx*, *xxx)</span>
+<span class="hljs-string">keys</span> <span class="hljs-string">pattern</span>
+
+<span class="hljs-comment"># 2.查看某一个key是否存在</span>
+<span class="hljs-string">exsits</span> <span class="hljs-string">key</span>
+
+<span class="hljs-comment"># 3.删除key</span>
+<span class="hljs-string">del</span> <span class="hljs-string">key</span> [<span class="hljs-string">key...</span>]</code></pre>
+
+<hr>
+<pre><code class="hljs yml"><span class="hljs-comment"># 4.设置key的生存时间，时间为秒，毫秒</span>
+<span class="hljs-string">expire</span> <span class="hljs-string">key</span> <span class="hljs-string">second</span>
+<span class="hljs-string">pexpire</span> <span class="hljs-string">key</span> <span class="hljs-string">millseconds</span>
+
+<span class="hljs-comment"># 5.设置key的生存时间，时间为秒，毫秒，设置能活到什么时间点</span>
+<span class="hljs-string">expireat</span> <span class="hljs-string">key</span> <span class="hljs-string">timestamp</span>
+<span class="hljs-string">pexpireat</span> <span class="hljs-string">key</span> <span class="hljs-string">millseconds</span>
+
+<span class="hljs-comment"># 6.查看key的剩余生存时间</span>
+<span class="hljs-string">ttl</span> <span class="hljs-string">key</span> 
+<span class="hljs-string">pttl</span> <span class="hljs-string">key</span>
+
+<span class="hljs-comment"># 7.移除key的生存时间</span>
+<span class="hljs-string">persist</span> <span class="hljs-string">key</span></code></pre>
+
+<hr>
+<pre><code class="hljs yml"><span class="hljs-comment"># 8.选择操作的库</span>
+<span class="hljs-string">select</span> <span class="hljs-number">0</span><span class="hljs-string">~15</span> 
+
+<span class="hljs-comment"># 9.移动key到另外一个库中</span>
+<span class="hljs-string">move</span> <span class="hljs-string">key</span> <span class="hljs-number">0</span><span class="hljs-string">~15</span></code></pre>
+
+
+
+
+
+<h3 id="3-8-库的常用命令"><a href="#3-8-库的常用命令" class="headerlink" title="3.8 库的常用命令"></a>3.8 库的常用命令</h3><pre><code class="hljs yml"><span class="hljs-comment"># 1.清空当前所在的数据库</span>
+<span class="hljs-string">flushdb</span>
+
+<span class="hljs-comment"># 2.清空全部数据库</span>
+<span class="hljs-string">flushall</span>
+
+<span class="hljs-comment"># 3.查看数据库有多少key数目</span>
+<span class="hljs-string">dbsize</span>
+
+<span class="hljs-comment"># 4.最后一次操作时间</span>
+<span class="hljs-string">lastsave</span>
+
+<span class="hljs-comment"># 5.实时监控redis服务接收到的命令</span>
+<span class="hljs-string">monitor</span></code></pre>
+
+
+
+<h2 id="四、Java连接Redis"><a href="#四、Java连接Redis" class="headerlink" title="四、Java连接Redis"></a>四、Java连接Redis</h2><ul>
+<li>Jedis连接Redis</li>
+</ul>
+<h3 id="4-1-Jedis连接Redis"><a href="#4-1-Jedis连接Redis" class="headerlink" title="4.1 Jedis连接Redis"></a>4.1 Jedis连接Redis</h3>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/sql/">sql</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/redis/">redis</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/11/05/mysql/">
+                        <span class="hidden-mobile">mysql</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '#post-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "redis笔记&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+  
+  
+    <script>
+      !function (e, t, a) {
+        function r() {
+          for (var e = 0; e < s.length; e++) s[e].alpha <= 0 ? (t.body.removeChild(s[e].el), s.splice(e, 1)) : (s[e].y--, s[e].scale += .004, s[e].alpha -= .013, s[e].el.style.cssText = "left:" + s[e].x + "px;top:" + s[e].y + "px;opacity:" + s[e].alpha + ";transform:scale(" + s[e].scale + "," + s[e].scale + ") rotate(45deg);background:" + s[e].color + ";z-index:99999");
+          requestAnimationFrame(r)
+        }
+
+        function n() {
+          var t = "function" == typeof e.onclick && e.onclick;
+          e.onclick = function (e) {
+            t && t(), o(e)
+          }
+        }
+
+        function o(e) {
+          var a = t.createElement("div");
+          a.className = "heart", s.push({
+            el: a,
+            x: e.clientX - 5,
+            y: e.clientY - 5,
+            scale: 1,
+            alpha: 1,
+            color: c()
+          }), t.body.appendChild(a)
+        }
+
+        function i(e) {
+          var a = t.createElement("style");
+          a.type = "text/css";
+          try {
+            a.appendChild(t.createTextNode(e))
+          } catch (t) {
+            a.styleSheet.cssText = e
+          }
+          t.getElementsByTagName("head")[0].appendChild(a)
+        }
+
+        function c() {
+          return "rgb(" + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + ")"
+        }
+
+        var s = [];
+        e.requestAnimationFrame = e.requestAnimationFrame || e.webkitRequestAnimationFrame || e.mozRequestAnimationFrame || e.oRequestAnimationFrame || e.msRequestAnimationFrame || function (e) {
+          setTimeout(e, 1e3 / 60)
+        }, i(".heart{width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: fixed;}.heart:after{top: -5px;}.heart:before{left: -5px;}"), n(), r()
+      }(window, document);
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+</body>
+</html>
