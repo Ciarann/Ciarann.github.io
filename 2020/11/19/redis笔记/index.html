@@ -177,7 +177,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.5k 字
+      4k 字
     </span>
   
 
@@ -187,7 +187,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      19
+      47
        分钟
     </span>
   
@@ -229,7 +229,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：November 23, 2020 am
+                  本文最后更新于：November 24, 2020 pm
                 
               </p>
             
@@ -500,10 +500,175 @@
 
 
 
-<h2 id="四、Java连接Redis"><a href="#四、Java连接Redis" class="headerlink" title="四、Java连接Redis"></a>四、Java连接Redis</h2><ul>
-<li>Jedis连接Redis</li>
+<h2 id="四、Java连接Redis"><a href="#四、Java连接Redis" class="headerlink" title="四、Java连接Redis"></a>四、Java连接Redis</h2><p>Lettuce 和 Jedis 的定位都是Redis的client，所以他们当然可以直接连接redis server。</p>
+<p>Jedis在实现上是直接连接的redis server，如果在多线程环境下是非线程安全的，这个时候只有使用连接池，为每个Jedis实例增加物理连接</p>
+<p>Lettuce的连接是基于Netty的，连接实例（StatefulRedisConnection）可以在多个线程间并发访问，应为StatefulRedisConnection是线程安全的，所以一个连接实例（StatefulRedisConnection）就可以满足多线程环境下的并发访问，当然这个也是可伸缩的设计，一个连接实例不够的情况也可以按需增加连接实例。</p>
+<p>现在SpringBoot 2.x以后 采用Lettuce连接Redis</p>
+<h2 id="五、Redis其他配置及集群"><a href="#五、Redis其他配置及集群" class="headerlink" title="五、Redis其他配置及集群"></a>五、Redis其他配置及集群</h2><h3 id="5-1-Redis的AUTH"><a href="#5-1-Redis的AUTH" class="headerlink" title="5.1 Redis的AUTH"></a>5.1 Redis的AUTH</h3><p>在 ./conf/redis.conf中添加</p>
+<p>requirepass xxxx</p>
+<p>重启redis： docker-compose restart 即可修改密码</p>
+<h3 id="5-2-Redis的事务"><a href="#5-2-Redis的事务" class="headerlink" title="5.2 Redis的事务"></a>5.2 Redis的事务</h3><p>Redis的事务：一次事务，该成功的成功，该失败的失败。<br>先开启事务，执行一系列的命令，但是密码不会立即执行，会被放在一个队列中，如果你执行事<br>务，那么这个队列中的命令全部执行，如果取消事务，一个队列中的命令全部作废。</p>
+<ol>
+<li>开启事务：multi</li>
+<li>输入要执行的命令，命令被放入到一个队列中</li>
+<li>执行事务：exec</li>
+<li>取消事务：discard<br>Redis的事务想发挥功能，需要配合watch监听机制<br>在开启事务之前，先通过watch命令监听一个或者多个key，在开启事务之后，如果有其他客户端修<br>改了我监听的key，事务会自动取消。<br>如果执行了事务或者取消了事务，watch监听自动消除，一般不需要手动执行unwatch释放监听。</li>
+</ol>
+<h3 id="5-3-Redis的持久化机制"><a href="#5-3-Redis的持久化机制" class="headerlink" title="5.3 Redis的持久化机制"></a>5.3 Redis的持久化机制</h3><h4 id="RDB方式-默认"><a href="#RDB方式-默认" class="headerlink" title="RDB方式-默认"></a>RDB方式-默认</h4><pre><code class="hljs yml"><span class="hljs-comment">#RDB主要配置项</span>
+<span class="hljs-comment">#持久化时机：在900秒内，有1个key改变，就执行RDB持久化</span>
+<span class="hljs-string">save</span> <span class="hljs-number">900</span> <span class="hljs-number">1</span>
+<span class="hljs-comment">#持久化时机：在300秒内，有10个key改变，就执行RDB持久化</span>
+<span class="hljs-string">save</span> <span class="hljs-number">300</span> <span class="hljs-number">10</span>
+<span class="hljs-comment">#持久化时机：在60秒内，有10000个key改变，就执行RDB持久化</span>
+<span class="hljs-string">save</span> <span class="hljs-number">60</span> <span class="hljs-number">10000</span>
+<span class="hljs-comment">#开启RDB持久化的压缩</span>
+<span class="hljs-string">rdbcompression</span> <span class="hljs-literal">yes</span>
+<span class="hljs-comment">#RDB持久化文件的名称</span>
+<span class="hljs-string">dbfilename</span> <span class="hljs-string">dump.rdb</span></code></pre>
+
+<p>RDB是Redis默认的持久化机制</p>
+<ol>
+<li>RDB持久化文件，速度比较快，而且存储的是一个二进制的文件，传输起来很方便。</li>
+<li>RDB持久化的时机：<br>save 900 1 #在900秒内，有1个key改变，就执行RDB持久化<br>save 300 10 #在300秒内，有10个key改变，就执行RDB持久化<br>save 60 10000 #在60秒内，有10000个key改变，就执行RDB持久化</li>
+<li>RDB无法保证数据的绝对安全</li>
+</ol>
+<h4 id="AOF方式"><a href="#AOF方式" class="headerlink" title="AOF方式"></a>AOF方式</h4><pre><code class="hljs yml"><span class="hljs-comment">#AOF主要配置项</span>
+<span class="hljs-comment">#代表开启AOF持久化</span>
+<span class="hljs-string">appendonly</span> <span class="hljs-literal">yes</span>
+<span class="hljs-comment">#AOF文件的名称</span>
+<span class="hljs-string">appendfilename</span> <span class="hljs-string">&quot;redis.aof&quot;</span>
+<span class="hljs-comment">#AOF持久化执行的时机</span>
+<span class="hljs-comment">#每执行一个写操作，立即持久化到AOF文件中，性能比较低</span>
+<span class="hljs-string">appendfsync</span> <span class="hljs-string">always</span>
+<span class="hljs-comment">#每秒执行一次持久化</span>
+<span class="hljs-string">appendfsync</span> <span class="hljs-string">everysec</span>
+<span class="hljs-comment">#会根据你的操作系统不同，环境的不同，在一定时间执行一次持久化</span>
+<span class="hljs-string">appendfsync</span> <span class="hljs-literal">no</span></code></pre>
+
+<p>AOF持久化机制默认是关闭的，Redis官方推荐同时开启RDB和AOF持久化，更安全，避免数据丢<br>失。在aof无法使用的时候，再用rdb的备份文件做替补恢复</p>
+<ol>
+<li>AOF持久化的速度相对RDB较慢，存储的是一个文本文件，时间久了文件会比较大，传输困<br>难</li>
+<li>AOF持久化机制：<br>#每执行一个写操作，立即持久化到AOF文件中，性能比较低<br>appendfsync always<br>#每秒执行一次持久化<br>appendfsync everysec<br>#会根据你的操作系统不同，环境的不同，在一定时间执行一次持久化<br>appendfsync no</li>
+<li>AOF相对RDB更安全，推荐同时开启AOF和RDB。</li>
+</ol>
+<p>同时开启<strong>RDB</strong>和<strong>AOF</strong>的<strong>注意事项</strong>：</p>
+<ul>
+<li><strong>如果同时开启了AOF和RDB持久化，那么Redis宕机重启之后，需要加载一个持久化文件，优先选择</strong><br><strong>AOF文件。</strong></li>
+<li><strong>如果先开启了RDB，然后之后开启AOF，如果RDB执行了持久化，那么RDB文件中的内容会被AOF覆</strong><br><strong>盖掉。</strong></li>
 </ul>
-<h3 id="4-1-Jedis连接Redis"><a href="#4-1-Jedis连接Redis" class="headerlink" title="4.1 Jedis连接Redis"></a>4.1 Jedis连接Redis</h3>
+<h3 id="5-4-Redis的主从架构"><a href="#5-4-Redis的主从架构" class="headerlink" title="5.4 Redis的主从架构"></a>5.4 Redis的主从架构</h3><p>单机版Redis存在读写瓶颈的问题</p>
+<pre><code class="hljs yml"><span class="hljs-comment">#指定本 yml 依从的 compose 哪个版本制定的</span>
+<span class="hljs-attr">version:</span> <span class="hljs-string">&#x27;3.1&#x27;</span>
+<span class="hljs-comment">#定义服务</span>
+<span class="hljs-attr">services:</span>
+<span class="hljs-comment">#定义一个服务</span>
+<span class="hljs-attr">redis1:</span>
+<span class="hljs-comment">#指定镜像</span>
+<span class="hljs-attr">image:</span> <span class="hljs-string">daocloud.io/library/redis:5.0.7</span>
+<span class="hljs-comment">#容器总是从新启动</span>
+<span class="hljs-attr">restart:</span> <span class="hljs-string">always</span>
+<span class="hljs-comment">#容器名称</span>
+<span class="hljs-attr">container_name:</span> <span class="hljs-string">redis1</span>
+<span class="hljs-comment">#添加环境变量。指定时区</span>
+<span class="hljs-attr">environment:</span>
+<span class="hljs-bullet">-</span> <span class="hljs-string">TZ=Asia/Shanghai</span>
+<span class="hljs-comment">#添加端口映射</span>
+<span class="hljs-attr">ports:</span>
+<span class="hljs-bullet">-</span> <span class="hljs-number">7001</span><span class="hljs-string">:6379</span>
+<span class="hljs-comment">#将主机当前目录的conf目录下的redis.conf挂载到容器里的/usr/local/redis.conf。</span>
+<span class="hljs-attr">volumes:</span>
+<span class="hljs-bullet">-</span> <span class="hljs-string">./conf/redis1.conf:/usr/local/redis.conf</span>
+<span class="hljs-comment">#覆盖容器启动的默认命令。</span>
+<span class="hljs-attr">command:</span> [<span class="hljs-string">&quot;redis-server&quot;</span>,<span class="hljs-string">&quot;/usr/local/redis.conf&quot;</span>]
+<span class="hljs-attr">redis2:</span>
+<span class="hljs-comment">#指定镜像</span>
+<span class="hljs-attr">image:</span> <span class="hljs-string">daocloud.io/library/redis:5.0.7</span>
+<span class="hljs-comment">#容器总是从新启动</span>
+<span class="hljs-attr">restart:</span> <span class="hljs-string">always</span>
+<span class="hljs-comment">#容器名称</span>
+<span class="hljs-attr">container_name:</span> <span class="hljs-string">redis2</span>
+<span class="hljs-comment">#添加环境变量。指定时区</span>
+<span class="hljs-attr">environment:</span>
+<span class="hljs-bullet">-</span> <span class="hljs-string">TZ=Asia/Shanghai</span>
+<span class="hljs-comment">#添加端口映射</span>
+<span class="hljs-attr">ports:</span>
+<span class="hljs-bullet">-</span> <span class="hljs-number">7002</span><span class="hljs-string">:6379</span>
+<span class="hljs-comment">#将主机当前目录的conf目录下的redis.conf挂载到容器里的/usr/local/redis.conf。</span>
+<span class="hljs-attr">volumes:</span>
+<span class="hljs-bullet">-</span> <span class="hljs-string">./conf/redis2.conf:/usr/local/redis.conf</span>
+<span class="hljs-comment">#配置链接，redis1容器别名master</span>
+<span class="hljs-attr">links:</span>
+<span class="hljs-bullet">-</span> <span class="hljs-string">redis1:master</span>
+<span class="hljs-comment">#覆盖容器启动的默认命令。</span>
+<span class="hljs-attr">command:</span> [<span class="hljs-string">&quot;redis-server&quot;</span>,<span class="hljs-string">&quot;/usr/local/redis.conf&quot;</span>]
+<span class="hljs-attr">redis3:</span>
+<span class="hljs-comment">#指定镜像</span>
+<span class="hljs-attr">image:</span> <span class="hljs-string">daocloud.io/library/redis:5.0.7</span>
+<span class="hljs-comment">#容器总是从新启动</span>
+<span class="hljs-attr">restart:</span> <span class="hljs-string">always</span>
+<span class="hljs-comment">#容器名称</span>
+<span class="hljs-attr">container_name:</span> <span class="hljs-string">redis3</span>
+<span class="hljs-comment">#添加环境变量。指定时区</span>
+<span class="hljs-attr">environment:</span>
+<span class="hljs-bullet">-</span> <span class="hljs-string">TZ=Asia/Shanghai</span>
+<span class="hljs-comment">#添加端口映射</span>
+<span class="hljs-attr">ports:</span>
+<span class="hljs-bullet">-</span> <span class="hljs-number">7003</span><span class="hljs-string">:6379</span>
+<span class="hljs-comment">#将主机当前目录的conf目录下的redis.conf挂载到容器里的/usr/local/redis.conf。</span>
+<span class="hljs-attr">volumes:</span>
+<span class="hljs-bullet">-</span> <span class="hljs-string">./conf/redis3.conf:/usr/local/redis.conf</span>
+<span class="hljs-attr">links:</span>
+<span class="hljs-bullet">-</span> <span class="hljs-string">redis1:master</span>
+<span class="hljs-comment">#覆盖容器启动的默认命令。</span>
+<span class="hljs-attr">command:</span> [<span class="hljs-string">&quot;redis-server&quot;</span>,<span class="hljs-string">&quot;/usr/local/redis.conf&quot;</span>]</code></pre>
+
+<hr>
+<pre><code class="hljs yml"><span class="hljs-comment">#redis2和redis3从节点配置 replicaof &lt;masterip&gt; &lt;masterport&gt;</span>
+<span class="hljs-string">replicaof</span> <span class="hljs-string">master</span> <span class="hljs-number">6379</span></code></pre>
+
+<h3 id="5-5-Redis的哨兵"><a href="#5-5-Redis的哨兵" class="headerlink" title="5.5 Redis的哨兵"></a>5.5 Redis的哨兵</h3><p>哨兵进程对Redis服务器进行监控，可能会出现问题，为此，我们可以使用多个哨兵进行监控。各个哨兵之间还会进行监控，这样就形成了多哨兵模式。</p>
+<p>用文字描述一下<strong>故障切换（failover）</strong>的过程。假设主服务器宕机，哨兵1先检测到这个结果，系统并不会马上进行failover过程，仅仅是哨兵1主观的认为主服务器不可用，这个现象成为<strong>主观下线</strong>。当后面的哨兵也检测到主服务器不可用，并且数量达到一定值时，那么哨兵之间就会进行一次投票，投票的结果由一个哨兵发起，进行failover操作。切换成功后，就会通过发布订阅模式，让各个哨兵把自己监控的从服务器实现切换主机，这个过程称为<strong>客观下线</strong>。这样对于客户端而言，一切都是透明的。</p>
+<pre><code class="hljs yml"><span class="hljs-comment">#哨兵需要后台启动</span>
+<span class="hljs-string">daemonize</span> <span class="hljs-literal">yes</span>
+<span class="hljs-comment">#指定Master节点的ip和端口(主) 哨兵 监视 主节节点 主节点IP/名称 端口 2个从节点</span>
+<span class="hljs-string">sentinel</span> <span class="hljs-string">monitor</span> <span class="hljs-string">master</span> <span class="hljs-string">localhost</span> <span class="hljs-number">6379 </span><span class="hljs-number">2</span>
+<span class="hljs-comment">#指定Master节点的ip和端口(从) sentinel monitor mymaster 127.0.0.1 6379 2</span>
+<span class="hljs-string">sentinel</span> <span class="hljs-string">monitor</span> <span class="hljs-string">master</span> <span class="hljs-string">master</span> <span class="hljs-number">6379 </span><span class="hljs-number">2</span>
+<span class="hljs-comment">#哨兵每隔多久监听一次redis架构，默认为3秒，这里设置1秒好看效果</span>
+<span class="hljs-string">sentinel</span> <span class="hljs-string">down-after-milliseconds</span> <span class="hljs-string">master</span> <span class="hljs-number">10000</span></code></pre>
+
+<ul>
+<li>./conf/sentinel1.conf</li>
+<li>./conf/sentinel2.conf</li>
+<li>./conf/sentinel3.conf</li>
+</ul>
+<h3 id="5-6-Redis集群"><a href="#5-6-Redis集群" class="headerlink" title="5.6 Redis集群"></a>5.6 Redis集群</h3><p>Redis集群在保证主从加哨兵的基本功能之外，还能提升Redis存储数据的能力。</p>
+<p><img src="/redisImage/3.jpg" srcset="/img/loading.gif"></p>
+<h2 id="六、Redis常见问题"><a href="#六、Redis常见问题" class="headerlink" title="六、Redis常见问题"></a>六、Redis常见问题</h2><h3 id="6-1Key的生存时间到了-redis会立即删除吗？"><a href="#6-1Key的生存时间到了-redis会立即删除吗？" class="headerlink" title="6.1Key的生存时间到了,redis会立即删除吗？"></a>6.1Key的生存时间到了,redis会立即删除吗？</h3><p>不会立即删除</p>
+<ol>
+<li>定期删除：<br>Redis每隔一段时间就会去查看Redis设置了过期时间的key，会在大概100ms的间隔中默认查<br>看3个key.</li>
+<li>惰性删除<br>当去查询一个已经过了生存时间的key时，Redis会先查看当前key的生存时间是否已经到了，<br>直接删除当前key,并且给用户返回一个空值。</li>
+</ol>
+<h3 id="6-2-Redis的淘汰机制"><a href="#6-2-Redis的淘汰机制" class="headerlink" title="6.2 Redis的淘汰机制"></a>6.2 Redis的淘汰机制</h3><p>在Redis内存已经满的时候，添加一个新的数据，就会执行淘汰策略。</p>
+<ol>
+<li>volatile-lru：在内存不足时，Redis会在设置了过期时间的key中淘汰掉一个最近最少使用的<br>key</li>
+<li>allkeys-lru：在内存不足时，Redis会在全部的key中淘汰掉一个最近最少使用的key</li>
+<li>volatile-lfu：在内存不足时，Redis会在设置了过期时间的key中淘汰掉一个最近最少频次使<br>用的key</li>
+<li>allkeys-lfu：在内存不足时，Redis会在全部的key中淘汰掉一个最近最少频次使用的key</li>
+<li>volatile-random：在内存不足时，Redis会在设置了过期时间的key中随机淘汰掉一个key</li>
+<li>allkeys-random：在内存不足时，Redis会在全部的key中随机淘汰掉一个key</li>
+<li>volatile-ttl：在内存不足时，Redis会在设置了过期时间的key中随机淘汰掉一个剩余生存时间<br>最少的key</li>
+<li>noeviction：（默认）：在内存不足时，直接报错<br>指定淘汰机制的方式：maxmemory-policy noeviction（具体策略）<br>设置Redis最大内存：maxmemory</li>
+</ol>
+<h3 id="6-3-缓存的常见问题"><a href="#6-3-缓存的常见问题" class="headerlink" title="6.3 缓存的常见问题"></a>6.3 缓存的常见问题</h3><p>缓存穿透</p>
+<pre><code class="hljs yml"><span class="hljs-string">问题出现的原因：查询的数据，Redis中没有，数据库中也没有。如何解决？</span>
+<span class="hljs-number">1</span><span class="hljs-string">.</span> <span class="hljs-string">根据Id查询时，如果id是自增的，将id的最大值放到Redis中，在查询数据库之前，直接比较一下id.</span>
+<span class="hljs-number">2</span><span class="hljs-string">.</span> <span class="hljs-string">如果id不是整形的，可以将全部id放到set中，在用户查询之前，去set中查看一些是否有这个id.</span>
+<span class="hljs-number">3</span><span class="hljs-string">.</span> <span class="hljs-string">获取客户端的ip地址，可以将ip的访问添加限制。</span>
+<span class="hljs-number">4</span><span class="hljs-string">.</span> <span class="hljs-string">将访问的key直接在Redis中缓存一个空值，下次访问的时候可直接查redis放回空值</span>
+<span class="hljs-number">5</span><span class="hljs-string">.</span> <span class="hljs-string">根据缓存数据Key的设计规则，将不符合规则的key采用布隆过滤器进行过滤</span></code></pre>
+
+
             </div>
             <hr>
             <div>
